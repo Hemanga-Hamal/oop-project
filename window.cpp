@@ -9,8 +9,8 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-    SetTargetFPS(24);               // Set our game to run at 60 frames-per-second
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    SetTargetFPS(24);            
+    while (!WindowShouldClose())    
     {
 
         BeginDrawing();
@@ -21,7 +21,7 @@ int main(void)
 
         EndDrawing();
     }
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow();      
 
     return 0;
 }
