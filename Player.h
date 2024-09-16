@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include "raylib.h"
-
 class Player {
 protected:
     //location
@@ -27,6 +26,11 @@ public:
     Vector2 getPLSpeed();
     int getPLHealth();
     int getPLProjDmg();
+
+    //v0->prototyping {rendering}
+   void draw();
+    void update();
+    
 };
 
 #endif

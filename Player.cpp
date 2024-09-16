@@ -15,3 +15,13 @@ Vector2 Player::getPLPos()  {return pl_pos;}
 Vector2 Player::getPLSpeed()  {return pl_speed;}
 int Player::getPLHealth() {return pl_health;}
 int Player::getPLProjDmg()  {return pl_projdmg;}    
+
+//v0->prototyping {rendering}
+void Player::draw(){
+    DrawCircleV(pl_pos, 20, BLUE);
+};
+
+void Player::update(){
+    pl_pos.x += pl_speed.x;
+    pl_pos.y += pl_speed.y;
+};
