@@ -17,10 +17,15 @@ protected:
     Vector2 v1;
     Vector2 v2; 
     Vector2 v3;
-    int pl_flashRedFrames;
+
+    //damage indicator
+    Color pl_colour;
+    float pl_flashRedTimeRemaining = 0.0f;
+    float flashRedDuration = 0.5f;
+
 public:
     // Constructor and Destructor
-    Player(float x, float y, Vector2 speed, float rotation, int health, int flashRedFrames);
+    Player(float x, float y, Vector2 speed, float rotation, int health);
     ~Player();
 
     // Setters
@@ -44,9 +49,10 @@ public:
     void right(float deltaTime);
 
     //Collision logic
-    void checkColEnemy(Vector2);
+    bool checkColEnemy(Vector2 enemyPos, float enemyRadius);
 
     // Update and Rendering
+    void takeDamage(int damage);
     void draw();
     void update(float deltaTime);
 
