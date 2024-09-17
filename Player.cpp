@@ -3,26 +3,29 @@
 #include <cmath>
 
 Player::Player(float x, float y, Vector2 speed, float rotation, int health)
-    : pl_pos({x, y}), pl_speed(speed), pl_rot(rotation), pl_health(health) {}
+     : pl_pos({x, y}), pl_speed(speed), pl_rot(rotation), pl_health(health) {}
 
 Player::~Player() {}
 
 // Setters
-void Player::setPLHealth(int health) { pl_health = health; }
-void Player::setPLSpeed(const Vector2& speed) { pl_speed = speed; }
-void Player::setRotation(float rotation) { pl_rot = rotation; }
+void Player::setPLHealth(int health)            { pl_health = health;   }
+void Player::setPLSpeed(const Vector2& speed)   { pl_speed = speed;     }
+void Player::setRotation(float rotation)        { pl_rot = rotation;    }
 
 // Getters
-Vector2 Player::getPLPos() const { return pl_pos; }
-Vector2 Player::getPLSpeed() const { return pl_speed; }
-int Player::getPLHealth() const { return pl_health; }
-float Player::getRotation() const { return pl_rot; }
+Vector2 Player::getPLPos()      const { return pl_pos;      }
+Vector2 Player::getPLSpeed()    const { return pl_speed;    }
+int Player::getPLHealth()       const { return pl_health;   }
+float Player::getRotation()     const { return pl_rot;      }
 
 // Movement
-void Player::up(float deltaTime) { pl_pos.y -= pl_speed.y * deltaTime; }
-void Player::down(float deltaTime) { pl_pos.y += pl_speed.y * deltaTime; }
-void Player::left(float deltaTime) { pl_pos.x -= pl_speed.x * deltaTime; }
+void Player::up(float deltaTime)    { pl_pos.y -= pl_speed.y * deltaTime; }
+void Player::down(float deltaTime)  { pl_pos.y += pl_speed.y * deltaTime; }
+void Player::left(float deltaTime)  { pl_pos.x -= pl_speed.x * deltaTime; }
 void Player::right(float deltaTime) { pl_pos.x += pl_speed.x * deltaTime; }
+
+//
+
 
 
 // Rendering
