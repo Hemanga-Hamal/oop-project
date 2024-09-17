@@ -1,9 +1,7 @@
 #include "raylib.h"
-#include "raymath.h"
-#include <cmath>
 #include "Projectiles.h"
 
-Projectiles::Projectiles():
+Projectiles::Projectiles(){}
 
 Vector2 Projectiles::getProjPos() {
     return proj_pos;
