@@ -1,18 +1,10 @@
 #include "raylib.h"
-#include "raymath.h"
-#include <cmath>
 #include "Projectiles.h"
 
+// Constructor and Destructor
 Projectiles::Projectiles() {}
 
-Vector2 Projectiles::getProjPos() {
-    return proj_pos;
-}
-
-Vector2 Projectiles::getProjSpeed() {
-    return proj_speed;
-}
-
-int Projectiles::getProjDamage() {
-    return proj_damage;
-}
+//Getters
+Vector2 Projectiles::getProjPos()   {return proj_pos;}
+Vector2 Projectiles::getProjSpeed() {return proj_speed;}
+int Projectiles::getProjDamage()    {return proj_damage;}

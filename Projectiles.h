@@ -29,7 +29,6 @@ class Projectiles{
 
         //Update
         virtual void update() = 0;
-
 };
 
 #endif
