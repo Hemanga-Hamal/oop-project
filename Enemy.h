@@ -18,7 +18,7 @@ class Enemy{
 
         // Getters
         int getEnemyHealth();
-        int getEnemySpeed();
+        Vector2 getEnemySpeed();
         Vector2 getEnemyPos();
         float getEnemyRotation();
 
@@ -32,8 +32,8 @@ class Enemy{
         void virtual movement(float, float) = 0;
 
         // Updating and Rendering
-        void draw();
-        void update(float deltaTime);
+        void virtual draw() = 0;
+        void virtual update(float deltaTime) = 0;
 };
 
 #endif

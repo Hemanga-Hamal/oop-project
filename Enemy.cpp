@@ -7,16 +7,14 @@ int Enemy::getEnemyHealth() {
     return enemy_health;
 }
 
-int Enemy::getEnemySpeed() {
+Vector2 Enemy::getEnemySpeed() {
     return enemy_speed;
 }
 
+Vector2 Enemy::getEnemyPos() {
+    return enemy_pos;
+}
 
- // Getters
-        int getEnemyHealth();
-        Vector2 getEnemySpeed();
-        Vector2 getEnemyPos();
-        float getEnemyRotation();
-        // Updating and Rendering
-        void draw();
-        void update(float deltaTime);
+float Enemy::getEnemyRotation() {
+    return enemy_rot;
+}
