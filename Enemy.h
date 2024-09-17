@@ -29,7 +29,7 @@ class Enemy{
         ~Enemy();
 
         // Movement
-        void virtual movement(float, float);
+        void virtual movement(float, float) = 0;
 
         // Updating and Rendering
         void draw();
