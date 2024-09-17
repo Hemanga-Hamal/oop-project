@@ -26,6 +26,8 @@ void Player::right(float deltaTime) { pl_pos.x += pl_speed.x * deltaTime; }
 
 //
 
+
+
 // Rendering
 void Player::updateRotation(Vector2 mousePos) {
     Vector2 direction = { mousePos.x - pl_pos.x, mousePos.y - pl_pos.y };
