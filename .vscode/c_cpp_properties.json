@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "C:/raylib/raylib/src/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:/Users/caoxx/Downloads/vcpkg-master/vcpkg-master/packages/raylib_x64-windows/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -22,7 +23,8 @@
             "name": "Mac",
             "includePath": [
                 "<path_to_raylib>/src/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:/Users/caoxx/Downloads/vcpkg-master/vcpkg-master/packages/raylib_x64-windows/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -44,6 +46,7 @@
             "includePath": [
                 "/usr/local/include/**",
                 "${workspaceFolder}/**"
+
             ],
             "defines": [
                 "_DEBUG",
