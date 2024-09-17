@@ -40,10 +40,12 @@ int Asteroids::getAsteroidsScale(){
     return asteroids_scale;
 }
 
-void draw(){
+// NEED TO DO DRAW AND UPDATE FUNCTIONS
+        void draw(){
 
-}
+        }
 
-void update(float deltaTime){
+        void update(float deltaTime){
 
-}
+        }
+// NEED TO DO DRAW AND UPDATE FUNCTIONS
