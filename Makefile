@@ -1,3 +1,5 @@
+# YOU WILL HAVE TO CHANGE THIS BASED ON OPERATING SYSTEM
+
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
