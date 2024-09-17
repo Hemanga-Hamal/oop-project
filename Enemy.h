@@ -18,22 +18,22 @@ class Enemy{
 
         // Getters
         int getEnemyHealth();
-        int getEnemySpeed();
+        Vector2 getEnemySpeed();
         Vector2 getEnemyPos();
         float getEnemyRotation();
 
         // Constructor
-        Enemy();
+        Enemy(float, float, float, float, float, int);
 
         // Destructor
         virtual ~Enemy();
 
         // Movement
-        void virtual movement(float, float);
+        void virtual movement(float, float) = 0;
 
         // Updating and Rendering
-        void draw();
-        void update(float deltaTime);
+        void virtual draw() = 0;
+        void virtual update(float deltaTime) = 0;
 };
 
 #endif
