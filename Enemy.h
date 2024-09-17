@@ -23,7 +23,7 @@ class Enemy{
         float getEnemyRotation();
 
         // Constructor
-        Enemy();
+        Enemy(float, float, float, float, float, int);
 
         // Destructor
         virtual ~Enemy();

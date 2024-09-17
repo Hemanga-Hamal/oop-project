@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "raylib.h"
 
-Enemy::Enemy() {}
+Enemy::Enemy(float xPos, float yPos, float xSpeed, float ySpeed, float rotation, int health): enemy_pos({xPos, yPos}), enemy_speed({xSpeed, ySpeed}), enemy_rot(rotation), enemy_health(health) {}
 
 int Enemy::getEnemyHealth() {
     return enemy_health;
