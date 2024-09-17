@@ -12,7 +12,7 @@ class Enemy{
     public:
         // Setters
         void virtual setEnemyHealth(int) = 0;
-        void virtual setEnemySpeed(int) = 0;
+        void virtual setEnemySpeed(float, float) = 0;
         void virtual setEnemyPos(Vector2) = 0;
         void virtual setEnemyRotation(float) = 0;
 
