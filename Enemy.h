@@ -26,7 +26,7 @@ class Enemy{
         Enemy();
 
         // Destructor
-        ~Enemy();
+        virtual ~Enemy();
 
         // Movement
         void virtual movement(float, float);
