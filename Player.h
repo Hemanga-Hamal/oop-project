@@ -2,41 +2,45 @@
 #define PLAYER_H
 
 #include "raylib.h"
+
 class Player {
 protected:
-    //location
+    // Location
     Vector2 pl_pos;
     Vector2 pl_speed;
+    float pl_rot;
 
-    //stats
+    // Stats
     int pl_health;
-    int pl_projdmg;
 
 public:
-    Player(float, float, int, Vector2, int);
+    // Constructor and Destructor
+    Player(float x, float y, Vector2 speed, float rotation, int health);
     ~Player();
 
-    //set
-    void setPLHealth(int);
-    void setPLSpeed( Vector2&);
-    void setPLProjDmg(int);
+    // Setters
+    void setPLHealth(int health);
+    void setPLSpeed(const Vector2& speed);
+    void setRotation(float rotation);
 
-    //get
-    Vector2 getPLPos();
-    Vector2 getPLSpeed();
-    int getPLHealth();
-    int getPLProjDmg();
+    // Getters
+    Vector2 getPLPos() const;
+    Vector2 getPLSpeed() const;
+    int getPLHealth() const;
+    float getRotation() const;
 
-    //movement
-    void up(float);
-    void down(float);
-    void left(float);
-    void right(float);
+    // Movement
+    void up(float deltaTime);
+    void down(float deltaTime);
+    void left(float deltaTime);
+    void right(float deltaTime);
 
-    //v0->prototyping {rendering}
-    void draw();
-    void update(float);
-    
+    // Update and Rendering
+    void draw() const;
+    void update(float deltaTime);
+
+    //Updates within updates
+    void updateRotation(Vector2 mousePos);
 };
 
 #endif
