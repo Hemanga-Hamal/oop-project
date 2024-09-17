@@ -8,7 +8,7 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Player Test");
 
     // Initialize player
-    Player player(screenWidth / 2.0f, screenHeight / 2.0f, {100.0f, 100.0f}, 0.0f, 100);
+    Player player(screenWidth / 2.0f, screenHeight / 2.0f, {100.0f, 100.0f}, 0.0f, 100, 0);
 
     SetTargetFPS(60);
 
