@@ -27,9 +27,15 @@ public:
     int getPLHealth();
     int getPLProjDmg();
 
+    //movement
+    void up(float);
+    void down(float);
+    void left(float);
+    void right(float);
+
     //v0->prototyping {rendering}
-   void draw();
-    void update();
+    void draw();
+    void update(float);
     
 };
 
