@@ -35,6 +35,9 @@ public:
     void left(float deltaTime);
     void right(float deltaTime);
 
+    //Collision logic
+    
+
     // Update and Rendering
     void draw() const;
     void update(float deltaTime);
