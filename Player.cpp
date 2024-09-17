@@ -27,12 +27,12 @@ void Player::right(float deltaTime) { pl_pos.x += pl_speed.x * deltaTime; }
 //
 
 
-
 // Rendering
 void Player::updateRotation(Vector2 mousePos) {
     Vector2 direction = { mousePos.x - pl_pos.x, mousePos.y - pl_pos.y };
     pl_rot = atan2f(direction.y, direction.x) + (float)PI / 2.0f;
 }
+
 void Player::draw() const {
     float size = 20.0f;
     Vector2 v1 = { pl_pos.x, pl_pos.y - size };
