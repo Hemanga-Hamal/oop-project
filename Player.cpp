@@ -28,9 +28,7 @@ void Player::left(float deltaTime)  { pl_pos.x -= pl_speed.x * deltaTime; }
 void Player::right(float deltaTime) { pl_pos.x += pl_speed.x * deltaTime; }
 
 //Collision logic
-bool Player::checkColEnemy(Vector2 enemyPos) {
-    
-}
+void Player::checkColEnemy(Vector2 enemyPos) {}
 
 // Rendering
 void Player::updateRotation(Vector2 mousePos) {
@@ -63,22 +61,19 @@ void Player::draw()  {
 
 // Update
 void Player::update(float deltaTime) {
-
+    //Movement
     if (IsKeyDown(KEY_W)) up(deltaTime);
     if (IsKeyDown(KEY_S)) down(deltaTime);
     if (IsKeyDown(KEY_A)) left(deltaTime);
     if (IsKeyDown(KEY_D)) right(deltaTime);
-
+    //model roation
     Vector2 mousePos = GetMousePosition();
     updateRotation(mousePos);
-
+    // Wrap around logic
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
-    
-    // Wrap around logic
     if (pl_pos.x < 0) pl_pos.x = screenWidth;
     if (pl_pos.x > screenWidth) pl_pos.x = 0;
     if (pl_pos.y < 0) pl_pos.y = screenHeight;
     if (pl_pos.y > screenHeight) pl_pos.y = 0;
-
 }

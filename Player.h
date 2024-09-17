@@ -44,7 +44,7 @@ public:
     void right(float deltaTime);
 
     //Collision logic
-    bool checkColEnemy(Vector2);
+    void checkColEnemy(Vector2);
 
     // Update and Rendering
     void draw();
