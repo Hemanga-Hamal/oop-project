@@ -5,19 +5,22 @@
 
 
 class PlayerProj : protected Projectiles{
-    private:
+private:
     Color PlayerProjCol = BLUE;
-
-    public:
-    PlayerProj(Vector2 pos,Vector2 speed);
+    
+public:
+    // Constructor and Destructor
+    PlayerProj(Vector2 pos, Vector2 speed);
     ~PlayerProj();
 
+    //setters
     void setProjPos(Vector2);
-    void setProjDamage(int);
     void setProjSpeed(Vector2);
+    void setProjDamage(int);
 
     //Render
     void draw() = 0;
+
     //Update
     void update() = 0;
 
