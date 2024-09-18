@@ -7,15 +7,29 @@ class Player {
 protected:
     // Location
     Vector2 pl_pos;
-    Vector2 pl_speed;
-    float pl_rot;
+    Vector2 pl_speed = {100.0f, 100.0f};
+    float pl_rot = 0;
 
     // Stats
     int pl_health;
 
+    // Bounding ellipse
+    float halfWidth = 10.0f;
+    float halfHeight = 20.0f;
+
+    //player vertices
+    Vector2 v1;
+    Vector2 v2; 
+    Vector2 v3;
+
+    //damage indicator
+    Color pl_colour;
+    float pl_flashRedTimeRemaining = 0.0f;
+    float flashRedDuration = 0.5f;
+
 public:
     // Constructor and Destructor
-    Player(float x, float y, Vector2 speed, float rotation, int health);
+    Player(Vector2 Pos, int health);
     ~Player();
 
     // Setters
@@ -30,13 +44,14 @@ public:
     float getRotation() const;
 
     // Movement
-    void up(float deltaTime);
-    void down(float deltaTime);
-    void left(float deltaTime);
-    void right(float deltaTime);
+    void movement(float deltaTimee);
+
+    //Collision logic
+    bool checkColEnemy(Vector2 enemyPos, float enemyRadius);
 
     // Update and Rendering
-    void draw() const;
+    void takeDamage(int damage);
+    void draw();
     void update(float deltaTime);
 
     //Updates within updates
