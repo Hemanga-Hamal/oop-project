@@ -7,11 +7,15 @@ class Player {
 protected:
     // Location
     Vector2 pl_pos;
-    Vector2 pl_speed;
-    float pl_rot;
+    Vector2 pl_speed = {100.0f, 100.0f};
+    float pl_rot = 0;
 
     // Stats
     int pl_health;
+
+    // Bounding ellipse
+    float halfWidth = 10.0f;
+    float halfHeight = 20.0f;
 
     //player vertices
     Vector2 v1;
@@ -25,7 +29,7 @@ protected:
 
 public:
     // Constructor and Destructor
-    Player(float x, float y, Vector2 speed, float rotation, int health);
+    Player(Vector2 Pos, int health);
     ~Player();
 
     // Setters
@@ -36,17 +40,11 @@ public:
     // Getters
     Vector2 getPLPos() const;
     Vector2 getPLSpeed() const;
-    Vector2 getv1();
-    Vector2 getv2();
-    Vector2 getv3();
     int getPLHealth() const;
     float getRotation() const;
 
     // Movement
-    void up(float deltaTime);
-    void down(float deltaTime);
-    void left(float deltaTime);
-    void right(float deltaTime);
+    void movement(float deltaTimee);
 
     //Collision logic
     bool checkColEnemy(Vector2 enemyPos, float enemyRadius);

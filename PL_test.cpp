@@ -3,25 +3,17 @@
 
 class Enemy {
 private:
-    Vector2 position;  // Enemy's position
-    float radius;      // Radius of the bounding circle
-
+    Vector2 position;
+    float radius;
+    int damage;
 public:
-    Enemy(float x, float y, float r) 
-        : position({x, y}), radius(r) {}
+    Enemy(float x, float y, float r, int damage): position({x, y}), radius(r), damage(damage){}
+    
+    Vector2 getEnemyPos()   {return position;   }
+    float getEnemyRadius()  {return radius;     }
+    int getEnemyDamage()    {return damage;     }
 
-    Vector2 getEnemyPos(){
-        return position;
-    }
-
-    float getEnemyRadius(){
-        return radius;
-    }
-
-    void draw() {
-        DrawCircleV(position, radius, RED);
-        DrawCircleLines(position.x, position.y, radius, DARKGRAY);
-    }
+    void draw()     {DrawCircleV(position, radius, RED);}
 };
 
 
@@ -32,9 +24,8 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Player Test");
 
     // Initialize player and enemy
-    Player player(screenWidth / 2.0f, screenHeight / 2.0f, {100.0f, 100.0f}, 0.0f, 100);
-    int damage = 10;
-    Enemy enemy(screenWidth / 4.0f, screenHeight / 4.0f, 25.0f);  // Radius = 25.0f
+    Player player({screenWidth / 2.0f, screenHeight / 2.0f}, 100);
+    Enemy enemy(screenWidth / 4.0f, screenHeight / 4.0f, 25.0f, 10);
 
     SetTargetFPS(60);
 
@@ -44,9 +35,10 @@ int main() {
 
         // Update player with enemy position and radius
         player.update(deltaTime);
+        
         // Collision detected: handle damage or response
         if (player.checkColEnemy(enemy.getEnemyPos(), enemy.getEnemyRadius())) {
-            player.takeDamage(damage);
+            player.takeDamage(enemy.getEnemyDamage());
         }
 
         // Drawing - background

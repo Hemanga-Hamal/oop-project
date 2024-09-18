@@ -1,6 +1,8 @@
 #ifndef ASTEROIDS_H
 #define ASTEROIDS_H
+
 #include "Enemy.h"
+#include "raylib.h"
 
 class Asteroids: protected Enemy{
     private:
@@ -8,15 +10,14 @@ class Asteroids: protected Enemy{
         int asteroids_damage;
     public:
         // Constructor
-        Asteroids(int, int, float, float, float, float, float, int);
+        Asteroids(int scale, int size, Vector2 pos, Vector2 speed, int);
 
         // Setters
+        void setEnemyPos(Vector2);
+        void setEnemySpeed(Vector2);
         void setAsteroidsDamage(int);
         void setAsteroidsScale(int);
         void setEnemyHealth(int);
-        void setEnemySpeed(float, float);
-        void setEnemyPos(Vector2);
-        void setEnemyRotation(float);
 
         // Getters
         int getAsteroidsDamage();

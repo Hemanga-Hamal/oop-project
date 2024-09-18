@@ -1,5 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
+
 #include "raylib.h"
 
 class Enemy{
@@ -7,23 +8,21 @@ class Enemy{
         // Enemy stats
         Vector2 enemy_pos;
         Vector2 enemy_speed;
-        float enemy_rot;
         int enemy_health;
+
     public:
         // Setters
-        void virtual setEnemyHealth(int) = 0;
-        void virtual setEnemySpeed(float, float) = 0;
         void virtual setEnemyPos(Vector2) = 0;
-        void virtual setEnemyRotation(float) = 0;
+        void virtual setEnemySpeed(Vector2) = 0;
+        void virtual setEnemyHealth(int) = 0;
 
         // Getters
-        int getEnemyHealth();
-        Vector2 getEnemySpeed();
         Vector2 getEnemyPos();
-        float getEnemyRotation();
+        Vector2 getEnemySpeed();
+        int getEnemyHealth();
 
         // Constructor
-        Enemy(float, float, float, float, float, int);
+        Enemy(Vector2 Pos, Vector2 Speed,int Health);
 
         // Destructor
         virtual ~Enemy();

@@ -2,8 +2,7 @@
 #include "raymath.h"
 #include <cmath>
 
-Player::Player(float x, float y, Vector2 speed, float rotation, int health)
-     : pl_pos({x, y}), pl_speed(speed), pl_rot(rotation), pl_health(health){}
+Player::Player(Vector2 pos, int health) : pl_pos(pos), pl_health(health){}
 
 Player::~Player() {}
 
@@ -15,31 +14,35 @@ void Player::setRotation(float rotation)        { pl_rot = rotation;    }
 // Getters
 Vector2 Player::getPLPos()      const { return pl_pos;      }
 Vector2 Player::getPLSpeed()    const { return pl_speed;    }
-Vector2 Player::getv1()               { return v1;          }
-Vector2 Player::getv2()               { return v2;          }
-Vector2 Player::getv3()               { return v3;          }
 int Player::getPLHealth()       const { return pl_health;   }
 float Player::getRotation()     const { return pl_rot;      }
 
 // Movement
-void Player::up(float deltaTime)    { pl_pos.y -= pl_speed.y * deltaTime; }
-void Player::down(float deltaTime)  { pl_pos.y += pl_speed.y * deltaTime; }
-void Player::left(float deltaTime)  { pl_pos.x -= pl_speed.x * deltaTime; }
-void Player::right(float deltaTime) { pl_pos.x += pl_speed.x * deltaTime; }
+void Player::movement(float deltaTime) {
+    if (IsKeyDown(KEY_W)) pl_pos.y -= pl_speed.y * deltaTime;
+    if (IsKeyDown(KEY_S)) pl_pos.y += pl_speed.y * deltaTime;
+    if (IsKeyDown(KEY_A)) pl_pos.x -= pl_speed.x * deltaTime;
+    if (IsKeyDown(KEY_D)) pl_pos.x += pl_speed.x * deltaTime;
 
+    // Wrap around screen edges
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
+    if (pl_pos.x < 0) pl_pos.x = screenWidth;
+    if (pl_pos.x > screenWidth) pl_pos.x = 0;
+    if (pl_pos.y < 0) pl_pos.y = screenHeight;
+    if (pl_pos.y > screenHeight) pl_pos.y = 0;
+}
+
+//Collision logic
 bool Player::checkColEnemy(Vector2 enemyPos, float enemyRadius) {
-    // Ellipse parameters
-    float halfWidth = 10.0f;
-    float halfHeight = 20.0f;
     Vector2 relativePos = Vector2Subtract(enemyPos, pl_pos);
     Vector2 rotatedPos = Vector2Rotate(relativePos, -pl_rot);
     float normX = rotatedPos.x / halfWidth;
     float normY = rotatedPos.y / halfHeight;
     bool insideEllipse = (normX * normX + normY * normY <= 1.0f);
 
-    if (insideEllipse) {
-        return true;
-    }
+    if (insideEllipse) {return true;}
+
     float angle = atan2f(rotatedPos.y, rotatedPos.x);
     float ellipseX = halfWidth * cosf(angle);
     float ellipseY = halfHeight * sinf(angle);
@@ -79,7 +82,7 @@ void Player::draw() {
     DrawTriangle(v1, v2, v3, pl_colour);
 
     //bouding oval testing
-    if (true){
+    if (false){
     float halfWidth = 10.0f;
     float halfHeight = 20.0f;
     int numSegments = 64;
@@ -99,23 +102,12 @@ void Player::draw() {
 
 // Update
 void Player::update(float deltaTime) {
-    //Movement
-    if (IsKeyDown(KEY_W)) up(deltaTime);
-    if (IsKeyDown(KEY_S)) down(deltaTime);
-    if (IsKeyDown(KEY_A)) left(deltaTime);
-    if (IsKeyDown(KEY_D)) right(deltaTime);
+    //movement
+    movement(deltaTime);
 
     //model Rotation
     Vector2 mousePos = GetMousePosition();
     updateRotation(mousePos);
-
-    // Wrap around logic
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-    if (pl_pos.x < 0) pl_pos.x = screenWidth;
-    if (pl_pos.x > screenWidth) pl_pos.x = 0;
-    if (pl_pos.y < 0) pl_pos.y = screenHeight;
-    if (pl_pos.y > screenHeight) pl_pos.y = 0;
 
     //Take damage colour swap
      if (pl_flashRedTimeRemaining > 0.0f) {
