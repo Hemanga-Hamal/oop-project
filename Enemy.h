@@ -11,6 +11,12 @@ class Enemy{
         int enemy_health;
 
     public:
+        // Constructor
+        Enemy(Vector2 Pos, Vector2 Speed,int Health);
+
+        // Destructor
+        virtual ~Enemy();
+
         // Setters
         void virtual setEnemyPos(Vector2) = 0;
         void virtual setEnemySpeed(Vector2) = 0;
@@ -21,14 +27,8 @@ class Enemy{
         Vector2 getEnemySpeed();
         int getEnemyHealth();
 
-        // Constructor
-        Enemy(Vector2 Pos, Vector2 Speed,int Health);
-
-        // Destructor
-        virtual ~Enemy();
-
         // Movement
-        void virtual movement(float, float) = 0;
+        void virtual movement(float) = 0;
 
         // Updating and Rendering
         void virtual draw() = 0;
