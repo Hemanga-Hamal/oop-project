@@ -4,16 +4,16 @@
 class Enemy {
 private:
     Vector2 position;
-    float radius;
+    Vector2 radius;
     int damage;
 public:
-    Enemy(float x, float y, float r, int damage): position({x, y}), radius(r), damage(damage){}
+    Enemy(float x, float y, Vector2 r, int damage): position({x, y}), radius(r), damage(damage){}
     
-    Vector2 getEnemyPos()   {return position;   }
-    float getEnemyRadius()  {return radius;     }
-    int getEnemyDamage()    {return damage;     }
+    Vector2 getEnemyPos()       {return position;   }
+    Vector2 getEnemyRadius()    {return radius;     }
+    int getEnemyDamage()        {return damage;     }
 
-    void draw()     {DrawCircleV(position, radius, RED);}
+    void draw()     {DrawCircleV(position, radius.x, RED);}
 };
 
 
@@ -25,7 +25,7 @@ int main() {
 
     // Initialize player and enemy
     Player player({screenWidth / 2.0f, screenHeight / 2.0f}, 100);
-    Enemy enemy(screenWidth / 4.0f, screenHeight / 4.0f, 25.0f, 10);
+    Enemy enemy(screenWidth / 4.0f, screenHeight / 4.0f, {25.0f,25.0f}, 10);
 
     SetTargetFPS(60);
 

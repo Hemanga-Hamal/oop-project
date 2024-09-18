@@ -34,14 +34,15 @@ void Player::movement(float deltaTime) {
 }
 
 //Collision logic
-bool Player::checkColEnemy(Vector2 enemyPos, float enemyRadius) {
+bool Player::checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding) {
     Vector2 relativePos = Vector2Subtract(enemyPos, pl_pos);
     Vector2 rotatedPos = Vector2Rotate(relativePos, -pl_rot);
+
     float normX = rotatedPos.x / halfWidth;
     float normY = rotatedPos.y / halfHeight;
     bool insideEllipse = (normX * normX + normY * normY <= 1.0f);
-
-    if (insideEllipse) {return true;}
+    
+    if (insideEllipse)  {return true;}
 
     float angle = atan2f(rotatedPos.y, rotatedPos.x);
     float ellipseX = halfWidth * cosf(angle);
@@ -49,8 +50,11 @@ bool Player::checkColEnemy(Vector2 enemyPos, float enemyRadius) {
     float dist_x = rotatedPos.x - ellipseX;
     float dist_y = rotatedPos.y - ellipseY;
     float distance = sqrtf(dist_x * dist_x + dist_y * dist_y);
-    return distance < enemyRadius;
+
+    return distance < enemyBounding.x|| distance < enemyBounding.y;
 }
+
+
 
 // Rendering
 void Player::updateRotation(Vector2 mousePos) {
@@ -66,9 +70,9 @@ void Player::takeDamage(int damage) {
 void Player::draw() {
     // Draw the player triangle
     float size = 23.0f;
-    Vector2 v1 = { pl_pos.x, pl_pos.y - size};
-    Vector2 v2 = { pl_pos.x - size / 2, pl_pos.y + size / 2 +2};
-    Vector2 v3 = { pl_pos.x + size / 2, pl_pos.y + size / 2 +2};
+    v1 = { pl_pos.x, pl_pos.y - size};
+    v2 = { pl_pos.x - size / 2, pl_pos.y + size / 2 +2};
+    v3 = { pl_pos.x + size / 2, pl_pos.y + size / 2 +2};
     Vector2 center = pl_pos;
 
     v1 = Vector2Rotate(Vector2Subtract(v1, center), pl_rot);
@@ -78,11 +82,11 @@ void Player::draw() {
     v3 = Vector2Rotate(Vector2Subtract(v3, center), pl_rot);
     v3 = Vector2Add(v3, center);
 
-    Color pl_colour = (pl_flashRedTimeRemaining > 0.0f) ? RED : BLUE;
+    pl_colour = (pl_flashRedTimeRemaining > 0.0f) ? RED : BLUE;
     DrawTriangle(v1, v2, v3, pl_colour);
 
     //bouding oval testing
-    if (false){
+    if (true){
     float halfWidth = 10.0f;
     float halfHeight = 20.0f;
     int numSegments = 64;

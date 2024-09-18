@@ -4,7 +4,7 @@
 #include "raylib.h"
 
 class Player {
-protected:
+private:
     // Location
     Vector2 pl_pos;
     Vector2 pl_speed = {100.0f, 100.0f};
@@ -47,7 +47,7 @@ public:
     void movement(float deltaTimee);
 
     //Collision logic
-    bool checkColEnemy(Vector2 enemyPos, float enemyRadius);
+    bool checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding);
 
     // Update and Rendering
     void takeDamage(int damage);
