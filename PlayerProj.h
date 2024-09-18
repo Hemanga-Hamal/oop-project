@@ -4,12 +4,22 @@
 #include "Projectiles.h"
 
 
-class PlayerProj{
+class PlayerProj : protected Projectiles{
     private:
-    
-    
-public:
+    Color PlayerProjCol = BLUE;
+
+    public:
+    PlayerProj(Vector2 pos,Vector2 speed);
+    ~PlayerProj();
+
+    void setProjPos(Vector2);
+    void setProjDamage(int);
+    void setProjSpeed(Vector2);
+
+    //Render
+    void draw() = 0;
+    //Update
+    void update() = 0;
 
 };
-
 #endif
