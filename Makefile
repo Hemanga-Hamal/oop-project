@@ -9,7 +9,7 @@ LDFLAGS = -L$(RAYLIB_PATH)/src -L$(RAYLIB_PATH)/src/external
 STATIC_FLAGS = -static-libgcc -static-libstdc++
 
 # Raylib linking for Windows (static)
-LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm -static
+LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm $(STATIC_FLAGS)
 
 # Paths
 RAYLIB_PATH = C:/raylib/raylib
@@ -29,11 +29,11 @@ all: $(EXEC_PL) $(EXEC_ASTER)
 
 # Link the executable for PL_test with static linking
 $(EXEC_PL): $(OBJ_PL)
-	$(CXX) -o $(EXEC_PL) $(OBJ_PL) $(CXXFLAGS) $(LDFLAGS) $(STATIC_FLAGS) $(LDLIBS)
+	$(CXX) -o $(EXEC_PL) $(OBJ_PL) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 # Link the executable for Aster_test with static linking
 $(EXEC_ASTER): $(OBJ_ASTER)
-	$(CXX) -o $(EXEC_ASTER) $(OBJ_ASTER) $(CXXFLAGS) $(LDFLAGS) $(STATIC_FLAGS) $(LDLIBS)
+	$(CXX) -o $(EXEC_ASTER) $(OBJ_ASTER) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 # Compile C++ source files to object files
 %.o: %.cpp
