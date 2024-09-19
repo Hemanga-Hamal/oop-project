@@ -19,10 +19,10 @@ public:
     void setProjDamage(int);
 
     //Render
-    void draw() = 0;
+    void draw();
 
     //Update
-    void update() = 0;
+    void update();
 
 };
 #endif

@@ -14,8 +14,7 @@ private:
     int pl_health;
 
     // Bounding ellipse
-    float halfWidth = 10.0f;
-    float halfHeight = 20.0f;
+    Vector2 pl_BoundingBox = {10.0f, 20.0f};
 
     //player vertices
     Vector2 v1;
@@ -40,6 +39,7 @@ public:
     // Getters
     Vector2 getPLPos() const;
     Vector2 getPLSpeed() const;
+    Vector2 getBoundingBox() const;
     int getPLHealth() const;
     float getRotation() const;
 
