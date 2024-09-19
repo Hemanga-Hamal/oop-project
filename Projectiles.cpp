@@ -3,6 +3,8 @@
 
 // Constructor and Destructor
 Projectiles::Projectiles() {}
+Projectiles::~Projectiles() {}
+
 
 //Getters
 Vector2 Projectiles::getProjPos()   {return proj_pos;}
