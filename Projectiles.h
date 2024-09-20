@@ -11,7 +11,7 @@ class Projectiles{
 
     public:
         // Constructor and Destructor
-        Projectiles();
+        Projectiles(Vector2 pos, Vector2 speed, int damage);
         virtual ~Projectiles();
 
         //Setters

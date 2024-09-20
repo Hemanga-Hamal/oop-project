@@ -1,6 +1,9 @@
-#include "raymath.h"
 #include "PlayerProj.h"
-#include <cmath>
+#include "raymath.h"
+
+// Constructor and destructor
+PlayerProj::PlayerProj(Vector2 pos, Vector2 speed) :Projectiles(pos, speed, 0) {}
+
 
 // setters 
 void PlayerProj::setProjDamage(int damage)     {damage = proj_damage;}
@@ -21,3 +24,4 @@ void PlayerProj::draw() {
     };
     DrawLineV(proj_pos, ProjEnd, PlayerProjCol);
 }
+

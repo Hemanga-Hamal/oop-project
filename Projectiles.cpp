@@ -2,7 +2,7 @@
 #include "Projectiles.h"
 
 // Constructor and Destructor
-Projectiles::Projectiles() {}
+Projectiles::Projectiles(Vector2 pos, Vector2 speed,  int damage) : proj_pos(pos), proj_speed(speed), proj_damage(damage) {}
 Projectiles::~Projectiles() {}
 
 
