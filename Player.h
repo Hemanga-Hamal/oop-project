@@ -40,6 +40,7 @@ public:
     Vector2 getPLPos() const;
     Vector2 getPLSpeed() const;
     Vector2 getBoundingBox() const;
+    Vector2 getPlayershotDir() const;
     int getPLHealth() const;
     float getRotation() const;
 

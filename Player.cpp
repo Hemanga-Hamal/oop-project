@@ -15,6 +15,7 @@ void Player::setRotation(float rotation)        { pl_rot = rotation;    }
 Vector2 Player::getPLPos()          const { return pl_pos;           }
 Vector2 Player::getPLSpeed()        const { return pl_speed;         }
 Vector2 Player::getBoundingBox()    const { return pl_BoundingBox;   }
+Vector2 Player::getPlayershotDir()  const { return v1;               }
 int Player::getPLHealth()           const { return pl_health;        }
 float Player::getRotation()         const { return pl_rot;           }
 
