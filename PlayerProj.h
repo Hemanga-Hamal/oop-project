@@ -22,7 +22,7 @@ public:
     void draw();
 
     //Update
-    void update();
+    void update(float deltaTime);
 
 };
 #endif
