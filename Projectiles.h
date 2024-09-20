@@ -20,9 +20,9 @@ class Projectiles{
         void virtual setProjSpeed(Vector2) = 0;
         
         //Getters
-        Vector2 getProjSpeed();
-        Vector2 getProjPos();
-        int getProjDamage();
+        Vector2 getProjSpeed() const;
+        Vector2 getProjPos() const;
+        int getProjDamage() const;
 
         //Render
         virtual void draw() = 0;

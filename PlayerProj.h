@@ -4,7 +4,7 @@
 #include "Projectiles.h"
 
 
-class PlayerProj : protected Projectiles{
+class PlayerProj : public Projectiles{
 private:
     Color PlayerProjCol = BLUE;
     
@@ -18,10 +18,8 @@ public:
     void setProjSpeed(Vector2);
     void setProjDamage(int);
 
-    //Render
-    void draw();
-
-    //Update
+    //Render and Update
+    void draw() const;
     void update(float deltaTime);
 
 };

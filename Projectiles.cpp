@@ -7,6 +7,6 @@ Projectiles::~Projectiles() {}
 
 
 //Getters
-Vector2 Projectiles::getProjPos()   {return proj_pos;}
-Vector2 Projectiles::getProjSpeed() {return proj_speed;}
-int Projectiles::getProjDamage()    {return proj_damage;}
+Vector2 Projectiles::getProjPos()   const {return proj_pos;}
+Vector2 Projectiles::getProjSpeed() const {return proj_speed;}
+int Projectiles::getProjDamage()    const {return proj_damage;}
