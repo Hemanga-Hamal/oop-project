@@ -1,7 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "PlayerProj.h"
 #include "raylib.h"
+#include <vector>
 
 class Player {
 private:
