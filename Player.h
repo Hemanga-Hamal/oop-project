@@ -44,7 +44,7 @@ public:
     float getRotation() const;
 
     // Movement
-    void movement(float deltaTimee);
+    void movement(float deltaTime);
 
     //Collision logic
     bool checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding);

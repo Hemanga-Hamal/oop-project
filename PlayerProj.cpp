@@ -11,7 +11,7 @@ void PlayerProj::setProjSpeed(Vector2 speed)     {speed = proj_speed;}
 void PlayerProj::setProjPos(Vector2 pos)             {pos = proj_pos;}
 
 void PlayerProj::update(float deltaTime){
-      proj_pos.x += proj_speed.x *deltaTime;
+    proj_pos.x += proj_speed.x *deltaTime;
     proj_pos.y += proj_speed.y *deltaTime;
 }
 
@@ -22,6 +22,7 @@ void PlayerProj::draw() {
         proj_pos.x + proj_speed.x * (ProjLength / Vector2Length(proj_speed)),
         proj_pos.y + proj_speed.y * (ProjLength / Vector2Length(proj_speed))
     };
+
     DrawLineV(proj_pos, ProjEnd, PlayerProjCol);
 }
 
