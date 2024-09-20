@@ -10,7 +10,7 @@ private:
     int asterDmg;
     float asterScale;
     Vector2 Aster_Bounding;
-    bool active; // Flag to check if asteroid is active
+    bool active;
 
 public:
     // Constructor
@@ -20,13 +20,13 @@ public:
     int getAsteroidsDamage() const;
     float getAsteroidsScale() const;
     Vector2 getAsteroidsBounding() const;
-    bool isActive() const; // Getter for active flag
+    bool isActive() const;
 
     // Setters
     void setEnemyPos(Vector2 pos) override;
     void setEnemySpeed(Vector2 speed) override;
     void setEnemyHealth(int health) override;
-    void setActive(bool state); // Setter for active flag
+    void setActive(bool state);
 
     // Collision logic
     bool checkColPlayer(Vector2 playerPos, Vector2 playerBounding, float pl_rot);
