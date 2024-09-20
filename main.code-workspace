@@ -11,8 +11,7 @@
 			"blocks.h": "c",
 			"stdio.h": "c",
 			"*.m": "c",
-			"cmath": "cpp",
-			"*.tcc": "cpp"
+			"cmath": "cpp"
 		}
 	}
 }

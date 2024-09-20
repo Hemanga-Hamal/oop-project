@@ -28,11 +28,6 @@ private:
     float pl_flashRedTimeRemaining = 0.0f;
     float flashRedDuration = 0.5f;
 
-    //Projectile
-    std::vector<PlayerProj> bullets;
-    float fireCooldown = 0.5f;
-    float timeSinceLastShot = 0.0f;
-
 public:
     // Constructor and Destructor
     Player(Vector2 Pos, int health);
@@ -53,11 +48,6 @@ public:
 
     // Movement
     void movement(float deltaTime);
-    
-    //Projectile
-    void shoot();
-    void updateProjectiles(float deltaTime);
-    void drawProjectiles();
 
     //Collision logic
     bool checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding);

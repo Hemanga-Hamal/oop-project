@@ -1,9 +1,5 @@
 #include "Player.h"
-#include "PlayerProj.h"
-#include "raylib.h"
 #include "raymath.h"
-#include <algorithm>
-#include <vector>
 #include <cmath>
 
 Player::Player(Vector2 pos, int health) : pl_pos(pos), pl_health(health){}
@@ -39,30 +35,6 @@ void Player::movement(float deltaTime) {
     if (pl_pos.y > screenHeight) pl_pos.y = 0;
 }
 
-//Projectile
-void Player::shoot() {
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && timeSinceLastShot >= fireCooldown) {
-        Vector2 bulletSpeed = { 200.0f * cosf(pl_rot - PI/2.0f), 200.0f * sinf(pl_rot - PI/2.0f) };
-        bullets.emplace_back(pl_pos, bulletSpeed);
-        timeSinceLastShot = 0.0f;
-    }
-}
-void Player::updateProjectiles(float deltaTime) {
-    timeSinceLastShot += deltaTime;
-    for (auto& bullet : bullets) {bullet.update(deltaTime);    }
-    bullets.erase(
-        std::remove_if(bullets.begin(), bullets.end(),
-            [](const PlayerProj& bullet) {
-                return (bullet.getProjPos().x < 0 || bullet.getProjPos().x > GetScreenWidth() ||
-                        bullet.getProjPos().y < 0 || bullet.getProjPos().y > GetScreenHeight());
-            }),
-        bullets.end()
-    );
-}
-
-void Player::drawProjectiles() {
-    for (const auto& bullet : bullets) {bullet.draw();}
-}
 //Collision logic
 bool Player::checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding) {
     Vector2 relativePos = Vector2Subtract(enemyPos, pl_pos);
@@ -112,9 +84,6 @@ void Player::draw() {
 
     pl_colour = (pl_flashRedTimeRemaining > 0.0f) ? RED : BLUE;
     DrawTriangle(v1, v2, v3, pl_colour);
-
-    // Draw projectiles
-    drawProjectiles();
 
     //bouding oval testing
     if (false){
