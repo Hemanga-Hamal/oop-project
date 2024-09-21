@@ -16,6 +16,9 @@ public:
     // Constructor
     Asteroids(Vector2 pos, Vector2 speed);
 
+    // Spawn at edges
+    void spawnAtEdge();
+
     // Getters
     int getAsteroidsDamage() const;
     float getAsteroidsScale() const;

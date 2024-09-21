@@ -1,6 +1,8 @@
 #include "Asteroids.h"
 #include "raymath.h"
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 // Constructor
 Asteroids::Asteroids(Vector2 pos, Vector2 speed) : Enemy(pos, speed, 0), active(true) {
@@ -8,6 +10,40 @@ Asteroids::Asteroids(Vector2 pos, Vector2 speed) : Enemy(pos, speed, 0), active(
     enemy_health = static_cast<int>(20 * asterScale);
     asterDmg = static_cast<int>(10 * asterScale);
     Aster_Bounding = { static_cast<float>(30 * asterScale), static_cast<float>(30 * asterScale) };
+    // Starts random seed on each run by taking time since epoch
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    spawnAtEdge();
+}
+
+void Asteroids::spawnAtEdge(){
+    // Generates a random value between 0 and 3 for the 4 edges of the screen
+    int edgeCase = std::rand() % 4;
+    switch (edgeCase){
+        case 0:
+            // Random x coord within width range
+            enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
+            // Y coord at the top
+            enemy_pos.y = 0;
+            break;
+        case 1:
+            // Random x coord within width range
+            enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
+            // Y coord at the bottom
+            enemy_pos.y = GetScreenHeight();
+            break;
+        case 2:
+            // X coord on the left 
+            enemy_pos.x = 0;
+            // Random y coord within height range
+            enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
+            break;
+        case 3:
+            // X coord on the right
+            enemy_pos.x = GetScreenWidth();
+            // Random y coord within height range
+            enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
+            break;
+    }
 }
 
 // Setters
