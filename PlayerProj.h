@@ -7,7 +7,6 @@
 class PlayerProj : protected Projectiles{
 private:
     Color PlayerProjCol = BLUE;
-    
 public:
     // Constructor and Destructor
     PlayerProj(Vector2 pos, Vector2 speed);

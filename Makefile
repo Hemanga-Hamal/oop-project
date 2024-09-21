@@ -22,8 +22,13 @@ SRC_ASTER = Player.cpp Aster_test.cpp Enemy.cpp Asteroids.cpp
 OBJ_ASTER = $(SRC_ASTER:.cpp=.o)
 EXEC_ASTER = Aster_test.exe
 
+# Project files for PLproj_test
+SRC_PLproj = PlayerProj.cpp PLproj_test.cpp Projectiles.cpp
+OBJ_PLproj = $(SRC_PLproj:.cpp=.o)
+EXEC_PLproj = PLproj_test.exe
+
 # Default target
-all: $(EXEC_PL) $(EXEC_ASTER)
+all: $(EXEC_PL) $(EXEC_ASTER) $(EXEC_PLproj)
 
 # Link the executable for PL_test with full static linking
 $(EXEC_PL): $(OBJ_PL)
@@ -32,6 +37,10 @@ $(EXEC_PL): $(OBJ_PL)
 # Link the executable for Aster_test with full static linking
 $(EXEC_ASTER): $(OBJ_ASTER)
 	$(CXX) -o $(EXEC_ASTER) $(OBJ_ASTER) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+
+# Compilation rule for the executable with full static linking
+$(EXEC_PLproj): $(OBJ_PLproj)
+	$(CXX) -o $(EXEC_PLproj) $(OBJ_PLproj) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 # Compile C++ source files to object files
 %.o: %.cpp

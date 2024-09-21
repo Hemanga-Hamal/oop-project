@@ -28,7 +28,7 @@ class Projectiles{
         virtual void draw() = 0;
 
         //Update
-        virtual void update() = 0;
+        virtual void update(float deltaTime) = 0;
 };
 
 #endif
