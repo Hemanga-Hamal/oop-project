@@ -27,6 +27,9 @@ public:
     void setProjSpeed(Vector2);
     void setProjDamage(int);
 
+    //Collision
+    bool checkEdgeCollision();
+
     //Update and Render
     void update(float deltaTime);
     void draw();

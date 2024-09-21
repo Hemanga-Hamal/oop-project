@@ -16,10 +16,24 @@ void PlayerProj::setProjDamage(int damage)     {proj_damage = damage;}
 void PlayerProj::setProjSpeed(Vector2 speed)     {proj_speed = speed;}
 void PlayerProj::setProjPos(Vector2 pos)             {proj_pos = pos;}
 
-//Update and Render
-void PlayerProj::update(float deltaTime){
-    proj_pos.x += proj_speed.x *deltaTime;
-    proj_pos.y += proj_speed.y *deltaTime;
+// Check for edge collision
+bool PlayerProj::checkEdgeCollision() {
+    if (proj_pos.x < 0 || proj_pos.x > GetScreenWidth() ||
+        proj_pos.y < 0 || proj_pos.y > GetScreenHeight()) {
+        active = false; 
+        return true;    
+    }
+    return false;
+}
+
+// Update and Render
+void PlayerProj::update(float deltaTime) {
+    proj_pos.x += proj_speed.x * deltaTime;
+    proj_pos.y += proj_speed.y * deltaTime;
+
+    if (checkEdgeCollision()) {
+        active = false;
+    }
 }
 
 void PlayerProj::draw() {
@@ -29,5 +43,3 @@ void PlayerProj::draw() {
     };
     DrawLineEx(proj_pos, ProjEnd, lineThickness, PlayerProjCol);
 }
-
-
