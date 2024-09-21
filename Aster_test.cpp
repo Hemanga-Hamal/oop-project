@@ -17,7 +17,7 @@ int main() {
     std::vector<Asteroids*> asteroids;
 
     // Create initial set of asteroids
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         Asteroids* newAsteroid = new Asteroids({0.0f, 0.0f}, {0.0f, 0.0f});
         newAsteroid->spawnNewAsteroid(player.getPLPos(), 150.0f);
         asteroids.push_back(newAsteroid);

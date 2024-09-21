@@ -7,7 +7,7 @@ class PlayerProj : protected Projectiles{
 private:
     //stats
     float ProjLength = 10.0f;
-    float ProjSetSpeed = 200.0f;
+    float ProjSetSpeed = 400.0f;
 
     //tag
     bool active;
