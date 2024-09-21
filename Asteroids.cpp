@@ -117,13 +117,47 @@ void Asteroids::setSpeedTowards(Vector2 target, float baseSpeed) {
     Vector2 direction = Vector2Subtract(target, enemy_pos);
     direction = Vector2Normalize(direction);
 
-    // Adjust speed inversely with the asteroid's scale
-    // To make the scaling more visible, use a scaling factor
-    float speedScalingFactor = 2.0f; // Adjust this factor to control speed scaling
+    float speedScalingFactor = 2.0f;
     float adjustedSpeed = (baseSpeed / asterScale) * speedScalingFactor;
     setEnemySpeed(Vector2Scale(direction, adjustedSpeed));
 }
 
+// Handles asteroid spawning after destruction
+void Asteroids::spawnNewAsteroid(Vector2 playerPos, float baseSpeed) {
+    Vector2 newAsteroidPos = {(float)GetRandomValue(0, GetScreenWidth()), (float)GetRandomValue(0, GetScreenHeight())};
+    setEnemyPos(newAsteroidPos);
+    setActive(true);
+    setSpeedTowards(playerPos, baseSpeed);
+}
+
+// Handles collision with the player and asteroid destruction
+bool Asteroids::handlePlayerCollision(Vector2 playerPos, Vector2 playerBounding, float pl_rot, Player& player) {
+    if (checkColPlayer(playerPos, playerBounding, pl_rot)) {
+        player.takeDamage(getAsteroidsDamage());
+        setActive(false);
+        return true;
+    }
+    return false;
+}
+
+// Update asteroid state, check collisions, respawn if necessary
+void Asteroids::update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player) {
+    if (!active) return;
+
+    movement(deltaTime);
+
+    if (handlePlayerCollision(player.getPLPos(), player.getBoundingBox(), 0.0f, player)) {
+        spawnNewAsteroid(player.getPLPos(), baseSpeed);
+    } 
+    else if (!isActive()) {
+        spawnNewAsteroid(player.getPLPos(), baseSpeed);
+    }
+
+    draw();
+}
+
+
+/*
 // Reset asteroid position, speed, and size
 void Asteroids::reset(Vector2 newPos, Vector2 playerPos, float baseSpeed, float scale) {
     setActive(true); // Set to active
@@ -139,3 +173,5 @@ void Asteroids::reset(Vector2 newPos, Vector2 playerPos, float baseSpeed, float 
 
     setSpeedTowards(playerPos, baseSpeed); 
 }
+
+*/

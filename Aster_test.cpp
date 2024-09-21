@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include "Player.h"
 #include "Asteroids.h"
+#include <vector>
 
 int main() {
     // Initialize window
@@ -9,10 +10,18 @@ int main() {
     const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, "Asteroids Test");
 
-    // Initialize player and first asteroid
+    // Initialize player
     Player player({screenWidth / 2.0f, screenHeight / 2.0f}, 100);
-    Asteroids asteroid({screenWidth / 4.0f, screenHeight / 4.0f}, {0.0f, 0.0f});
-    asteroid.setSpeedTowards(player.getPLPos(), 150.0f);
+
+    // Initialize a vector to store multiple asteroids
+    std::vector<Asteroids*> asteroids;
+
+    // Create initial set of asteroids
+    for (int i = 0; i < 5; i++) {
+        Asteroids* newAsteroid = new Asteroids({0.0f, 0.0f}, {0.0f, 0.0f});
+        newAsteroid->spawnNewAsteroid(player.getPLPos(), 150.0f);
+        asteroids.push_back(newAsteroid);
+    }
 
     SetTargetFPS(60);
 
@@ -20,44 +29,35 @@ int main() {
     while (!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
 
-        // Update asteroid and player
-        asteroid.update(deltaTime);
+        // Update player
         player.update(deltaTime);
 
-        // Collision detection
-        if (asteroid.checkColPlayer(player.getPLPos(), player.getBoundingBox(), 0.0f)) {
-            player.takeDamage(asteroid.getAsteroidsDamage());
-            
-            // Create new asteroid position off-screen and reset
-            Vector2 newAsteroidPos = { (float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight) };
-            if (newAsteroidPos.x < screenWidth / 2) newAsteroidPos.x -= screenWidth;
-            if (newAsteroidPos.y < screenHeight / 2) newAsteroidPos.y -= screenHeight;
-
-            // Reset the asteroid with a new position and speed
-            asteroid.reset(newAsteroidPos, player.getPLPos(), 100.0f);
+        // Update all asteroids and handle collisions automatically
+        for (Asteroids* asteroid : asteroids) {
+            asteroid->update(deltaTime, player.getPLPos(), 150.0f, player);
         }
 
-        // Check if the asteroid is inactive and needs resetting (e.g., if it's off-screen)
-        if (!asteroid.isActive()) {
-            Vector2 newAsteroidPos = { (float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight) };
-            if (newAsteroidPos.x < screenWidth / 2) newAsteroidPos.x -= screenWidth;
-            if (newAsteroidPos.y < screenHeight / 2) newAsteroidPos.y -= screenHeight;
-
-            asteroid.reset(newAsteroidPos, player.getPLPos(), 100.0f);
-        }
-
-        // Drawing - background
+        // Drawing
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Draw player and asteroid
+        // Draw player
         player.draw();
-        asteroid.draw();
+
+        // Draw all asteroids
+        for (Asteroids* asteroid : asteroids) {
+            asteroid->draw(); // Already handled in update, but for clarity
+        }
 
         // Display player health
         DrawText(TextFormat("Player Health: %i", player.getPLHealth()), 10, 10, 20, DARKGRAY);
 
         EndDrawing();
+    }
+
+    // Cleanup dynamically allocated asteroids
+    for (Asteroids* asteroid : asteroids) {
+        delete asteroid;
     }
 
     // Close window and OpenGL context
