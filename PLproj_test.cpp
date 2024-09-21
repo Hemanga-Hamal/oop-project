@@ -8,8 +8,8 @@ int main() {
     InitWindow(screenWidth, screenHeight, "PlayerProj Test");
 
     // Initialize the projectile
-    Vector2 initialPosition = { 400.0f, 300.0f };  // Center of the screen
-    Vector2 speed = { 100.0f, 50.0f };             // Initial speed
+    Vector2 initialPosition = { 400.0f, 300.0f };
+    Vector2 speed = { 100.0f, -50.0f };
     PlayerProj playerProj(initialPosition, speed);
 
     SetTargetFPS(60);  // Set FPS to 60
@@ -18,13 +18,13 @@ int main() {
     while (!WindowShouldClose()) {
         // Update projectile
         float deltaTime = GetFrameTime();
-        playerProj.update(deltaTime);
 
         // Drawing
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Draw projectile
+        // Draw projectile aand update
+        playerProj.update(deltaTime);
         playerProj.draw();
 
         EndDrawing();

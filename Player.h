@@ -23,6 +23,9 @@ private:
     Vector2 v2; 
     Vector2 v3;
 
+    //Shoot
+    
+
     //damage indicator
     Color pl_colour;
     float pl_flashRedTimeRemaining = 0.0f;
