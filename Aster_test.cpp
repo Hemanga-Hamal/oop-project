@@ -32,9 +32,19 @@ int main() {
         // Update player
         player.update(deltaTime);
 
-        // Update all asteroids and handle collisions automatically
-        for (Asteroids* asteroid : asteroids) {
-            asteroid->update(deltaTime, player.getPLPos(), 150.0f, player);
+        // Update all asteroids and handle collisions
+        for (size_t i = 0; i < asteroids.size(); ) {
+            asteroids[i]->update(deltaTime, player.getPLPos(), 150.0f, player);
+            if (!asteroids[i]->isActive()) {
+                // Remove inactive asteroid and spawn a new one
+                Asteroids* newAsteroid = new Asteroids({0.0f, 0.0f}, {0.0f, 0.0f});
+                newAsteroid->spawnNewAsteroid(player.getPLPos(), 150.0f);
+                asteroids.push_back(newAsteroid);
+                delete asteroids[i]; // Clean up the inactive asteroid
+                asteroids.erase(asteroids.begin() + i); // Remove from vector
+            } else {
+                ++i; // Only increment if not erased
+            }
         }
 
         // Drawing

@@ -15,10 +15,11 @@ Asteroids::Asteroids(Vector2 pos, Vector2 speed) : Enemy(pos, speed, 0), active(
     spawnAtEdge();
 }
 
-void Asteroids::spawnAtEdge(){
+// Spawn the asteroid at a random edge of the screen
+void Asteroids::spawnAtEdge() {
     // Generates a random value between 0 and 3 for the 4 edges of the screen
     int edgeCase = std::rand() % 4;
-    switch (edgeCase){
+    switch (edgeCase) {
         case 0:
             // Random x coord within width range
             enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
@@ -44,6 +45,7 @@ void Asteroids::spawnAtEdge(){
             enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
             break;
     }
+    setActive(true);
 }
 
 // Setters
@@ -124,10 +126,8 @@ void Asteroids::setSpeedTowards(Vector2 target, float baseSpeed) {
 
 // Handles asteroid spawning after destruction
 void Asteroids::spawnNewAsteroid(Vector2 playerPos, float baseSpeed) {
-    Vector2 newAsteroidPos = {(float)GetRandomValue(0, GetScreenWidth()), (float)GetRandomValue(0, GetScreenHeight())};
-    setEnemyPos(newAsteroidPos);
-    setActive(true);
-    setSpeedTowards(playerPos, baseSpeed);
+    spawnAtEdge();  // Reuse the spawnAtEdge logic
+    setSpeedTowards(playerPos, baseSpeed);  // Set speed towards the player
 }
 
 // Handles collision with the player and asteroid destruction
@@ -155,23 +155,3 @@ void Asteroids::update(float deltaTime, Vector2 playerPos, float baseSpeed, Play
 
     draw();
 }
-
-
-/*
-// Reset asteroid position, speed, and size
-void Asteroids::reset(Vector2 newPos, Vector2 playerPos, float baseSpeed, float scale) {
-    setActive(true); // Set to active
-    setEnemyPos(newPos);
-
-    if (scale <= 0.0f) {
-        asterScale = (GetRandomValue(85, 215) / 100.0f); 
-    } else {
-        asterScale = scale;
-    }
-    asterDmg = static_cast<int>(10 * asterScale);
-    Aster_Bounding = { static_cast<float>(30 * asterScale), static_cast<float>(30 * asterScale) };
-
-    setSpeedTowards(playerPos, baseSpeed); 
-}
-
-*/

@@ -1,15 +1,12 @@
-#ifndef ASTEROIDS_H
-#define ASTEROIDS_H
-
+#pragma once
 #include "Enemy.h"
 #include "Player.h"
 #include "raylib.h"
 
 class Asteroids : public Enemy {
 private:
-    // Asteroids stats
-    int asterDmg;
     float asterScale;
+    int asterDmg;
     Vector2 Aster_Bounding;
     bool active;
 
@@ -17,8 +14,11 @@ public:
     // Constructor
     Asteroids(Vector2 pos, Vector2 speed);
 
-    // Spawn at edges
-    void spawnAtEdge();
+    // Setters
+    void setEnemyPos(Vector2 pos) override;
+    void setEnemySpeed(Vector2 speed) override;
+    void setEnemyHealth(int health) override;
+    void setActive(bool state);
 
     // Getters
     int getAsteroidsDamage() const;
@@ -26,38 +26,28 @@ public:
     Vector2 getAsteroidsBounding() const;
     bool isActive() const;
 
-    // Setters
-    void setEnemyPos(Vector2 pos) override;
-    void setEnemySpeed(Vector2 speed) override;
-    void setEnemyHealth(int health) override;
-    void setActive(bool state);
+    // Movement
+    void movement(float deltaTime) override;
 
     // Collision logic
     bool checkColPlayer(Vector2 playerPos, Vector2 playerBounding, float pl_rot);
 
-    // Movement
-    void movement(float deltaTime) override;
-
-    // Updating and Rendering
+    // Draw the asteroid
     void draw() override;
-    void update(float deltaTime) override;
 
     // Set speed towards a target
-    void setSpeedTowards(Vector2 target, float speed);
+    void setSpeedTowards(Vector2 target, float baseSpeed);
 
-    // Spawns a new asteroid after an existing one is destroyed
+    // Spawns an asteroid at a random edge
+    void spawnAtEdge();
+
+    // Handles asteroid spawning after destruction
     void spawnNewAsteroid(Vector2 playerPos, float baseSpeed);
 
-    // Handle collision with player and perform relevant actions
+    // Handles collision with the player and asteroid destruction
     bool handlePlayerCollision(Vector2 playerPos, Vector2 playerBounding, float pl_rot, Player& player);
 
-    // Update asteroid, manage its state, and respawn if necessary
+    // Update asteroid state, check collisions, and respawn if necessary
     void update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player);
-
-    /*
-    // Reset asteroid position, speed, and size
-    void reset(Vector2 newPos, Vector2 playerPos, float speed, float scale = -1.0f);
-    */
+    void update(float deltaTime) override;
 };
-
-#endif
