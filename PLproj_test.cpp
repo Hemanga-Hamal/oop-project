@@ -1,31 +1,34 @@
 #include "raylib.h"
-#include "PlayerProj.h"
+#include "Player.h"     
+#include "PlayerProj.h" 
 
 int main() {
     // Initialize the window
     const int screenWidth = 800;
     const int screenHeight = 600;
-    InitWindow(screenWidth, screenHeight, "PlayerProj Test");
+    InitWindow(screenWidth, screenHeight, "Player and Projectiles Test");
 
-    // Initialize the projectile
-    Vector2 initialPosition = { 400.0f, 300.0f };
-    Vector2 speed = { 100.0f, -50.0f };
-    PlayerProj playerProj(initialPosition, speed);
+    // Initialize the player
+    Vector2 playerPosition = { 400.0f, 300.0f };
+    Player player(playerPosition, 100);
 
-    SetTargetFPS(60);  // Set FPS to 60
+    SetTargetFPS(60); 
 
     // Main game loop
     while (!WindowShouldClose()) {
-        // Update projectile
+        // Update
         float deltaTime = GetFrameTime();
+        player.update(deltaTime);
 
         // Drawing
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Draw projectile aand update
-        playerProj.update(deltaTime);
-        playerProj.draw();
+        player.draw();
+
+        // Display active bullet count
+        int activeBulletCount = player.getActiveBulletCount();
+        DrawText(TextFormat("Active Bullets: %d", activeBulletCount), 10, 10, 20, DARKGRAY);
 
         EndDrawing();
     }

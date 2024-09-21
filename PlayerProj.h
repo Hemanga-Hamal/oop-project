@@ -3,12 +3,11 @@
 #include "raylib.h"
 #include "Projectiles.h"
 
-
 class PlayerProj : protected Projectiles{
 private:
     //stats
     float ProjLength = 10.0f;
-    float ProjSetSpeed = 100.0f;
+    float ProjSetSpeed = 200.0f;
 
     //tag
     bool active;
@@ -27,12 +26,14 @@ public:
     void setProjSpeed(Vector2);
     void setProjDamage(int);
 
+    //getter
+    bool isActive() const;
+
     //Collision
     bool checkEdgeCollision();
 
-    //Update and Render
-    void update(float deltaTime);
+    //Render and Update
     void draw();
-
+    void update(float deltaTime);
 };
 #endif

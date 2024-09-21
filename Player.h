@@ -24,7 +24,11 @@ private:
     Vector2 v3;
 
     //Shoot
-    
+    std::vector<PlayerProj> projectiles;
+    int maxProjectiles = 10; //onscreen 
+    int activeBulletCount; 
+    float pl_shootTimeRemaining = 0.0f;
+    float pl_shootdelay = 0.3f;
 
     //damage indicator
     Color pl_colour;
@@ -51,6 +55,10 @@ public:
 
     // Movement
     void movement(float deltaTime);
+
+    //Shoot
+    int getActiveBulletCount() const;
+    void shoot();
 
     //Collision logic
     bool checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding);

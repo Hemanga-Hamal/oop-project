@@ -13,17 +13,17 @@ LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm $(STATIC_FLAGS)
 RAYLIB_PATH = C:/raylib/raylib
 
 # Project files for PL_test
-SRC_PL = Player.cpp PL_test.cpp Enemy.cpp Asteroids.cpp
+SRC_PL =  PL_test.cpp Player.cpp Enemy.cpp Asteroids.cpp PlayerProj.cpp Projectiles.cpp
 OBJ_PL = $(SRC_PL:.cpp=.o)
 EXEC_PL = PL_test.exe
 
 # Project files for Aster_test
-SRC_ASTER = Player.cpp Aster_test.cpp Enemy.cpp Asteroids.cpp
+SRC_ASTER =  Aster_test.cpp Player.cpp Enemy.cpp Asteroids.cpp PlayerProj.cpp Projectiles.cpp
 OBJ_ASTER = $(SRC_ASTER:.cpp=.o)
 EXEC_ASTER = Aster_test.exe
 
 # Project files for PLproj_test
-SRC_PLproj = PlayerProj.cpp PLproj_test.cpp Projectiles.cpp
+SRC_PLproj = PLproj_test.cpp PlayerProj.cpp Projectiles.cpp Player.cpp PlayerProj.cpp Projectiles.cpp
 OBJ_PLproj = $(SRC_PLproj:.cpp=.o)
 EXEC_PLproj = PLproj_test.exe
 

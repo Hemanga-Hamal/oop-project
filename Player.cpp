@@ -1,8 +1,9 @@
 #include "Player.h"
+#include "PlayerProj.h"
 #include "raymath.h"
 #include <cmath>
 
-Player::Player(Vector2 pos, int health) : pl_pos(pos), pl_health(health){}
+Player::Player(Vector2 pos, int health) : pl_pos(pos), pl_health(health), activeBulletCount(0) {}
 
 Player::~Player() {}
 
@@ -33,6 +34,23 @@ void Player::movement(float deltaTime) {
     if (pl_pos.x > screenWidth) pl_pos.x = 0;
     if (pl_pos.y < 0) pl_pos.y = screenHeight;
     if (pl_pos.y > screenHeight) pl_pos.y = 0;
+}
+
+//shoot
+int Player::getActiveBulletCount() const {
+        return activeBulletCount;
+}
+
+void Player::shoot() {
+    if (pl_shootTimeRemaining <= 0.0f) {
+        pl_shootTimeRemaining = pl_shootdelay;
+        if (projectiles.size() < maxProjectiles) {
+            Vector2 direction = { cosf(pl_rot - (float)PI / 2.0f), sinf(pl_rot - (float)PI / 2.0f) };
+            PlayerProj newProj(pl_pos, direction);
+            projectiles.push_back(newProj);
+            activeBulletCount++;
+        }
+    }
 }
 
 //Collision logic
@@ -85,6 +103,11 @@ void Player::draw() {
     pl_colour = (pl_flashRedTimeRemaining > 0.0f) ? RED : BLUE;
     DrawTriangle(v1, v2, v3, pl_colour);
 
+    // Draw projectiles
+    for (PlayerProj& proj : projectiles) {
+        proj.draw();
+    }
+
     //bouding oval testing
     if (false){
     float halfWidth = 10.0f;
@@ -109,6 +132,11 @@ void Player::update(float deltaTime) {
     //movement
     movement(deltaTime);
 
+    // Call the shoot method when the shoot key is pressed
+    if (IsKeyDown(KEY_SPACE)) {
+        shoot();
+    }
+
     //model Rotation
     Vector2 mousePos = GetMousePosition();
     updateRotation(mousePos);
@@ -117,4 +145,20 @@ void Player::update(float deltaTime) {
      if (pl_flashRedTimeRemaining > 0.0f) {
         pl_flashRedTimeRemaining -= deltaTime;
     }
+
+    // Shooting delay countdown
+    if (pl_shootTimeRemaining > 0.0f) {
+        pl_shootTimeRemaining -= deltaTime;
+    }
+
+    // Update projectiles and remove inactive ones
+    for (auto it = projectiles.begin(); it != projectiles.end(); ) {
+    it->update(deltaTime);
+    if (!it->isActive()) {
+        it = projectiles.erase(it);
+        activeBulletCount--;
+    } else {
+        ++it;
+    }
+}
 }

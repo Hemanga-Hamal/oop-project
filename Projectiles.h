@@ -2,33 +2,33 @@
 #define PROJECTILES_H
 #include "raylib.h"
 
-class Projectiles{
-    protected:
-        //Stats
-        Vector2 proj_pos;
-        Vector2 proj_speed;
-        int proj_damage;
+class Projectiles {
+protected:
+    // Stats
+    Vector2 proj_pos;
+    Vector2 proj_speed;
+    int proj_damage;
 
-    public:
-        // Constructor and Destructor
-        Projectiles(Vector2 pos, Vector2 speed, int damage);
-        virtual ~Projectiles();
+public:
+    // Constructor and Destructor
+    Projectiles(Vector2 pos, Vector2 speed, int damage);
+    virtual ~Projectiles();
 
-        //Setters
-        void virtual setProjPos(Vector2) = 0;
-        void virtual setProjDamage(int) = 0;
-        void virtual setProjSpeed(Vector2) = 0;
-        
-        //Getters
-        Vector2 getProjSpeed();
-        Vector2 getProjPos();
-        int getProjDamage();
+    // Setters
+    virtual void setProjPos(Vector2) = 0;
+    virtual void setProjDamage(int) = 0;
+    virtual void setProjSpeed(Vector2) = 0;
+    
+    // Getters
+    Vector2 getProjSpeed();
+    Vector2 getProjPos();
+    int getProjDamage();
 
-        //Render
-        virtual void draw() = 0;
+    // Render
+    virtual void draw() = 0;
 
-        //Update
-        virtual void update(float deltaTime) = 0;
+    // Update
+    virtual void update(float deltaTime) = 0;
 };
 
 #endif
