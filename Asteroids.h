@@ -26,7 +26,11 @@ public:
     Vector2 getAsteroidsBounding() const;
     bool isActive() const;
 
-    //Take Damage
+    // Check and break apart
+    int checkSize();
+    void breakApart();
+
+    // Take Damage
     void takeDamage(int damage);
     
     // Movement

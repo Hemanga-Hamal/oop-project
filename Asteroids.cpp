@@ -1,5 +1,6 @@
 #include "Asteroids.h"
 #include "raymath.h"
+#include "Player.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -11,6 +12,39 @@ Asteroids::Asteroids(Vector2 pos, Vector2 speed) : Enemy(pos, speed, 0), active(
     asterDmg = static_cast<int>(10 * asterScale);
     Aster_Bounding = { static_cast<float>(30 * asterScale), static_cast<float>(30 * asterScale) };
     spawnAtEdge();
+}
+// Check
+int Asteroids::checkSize(){
+    if (Aster_Bounding.x <= 38){
+        return 1; // Small
+    } else if (Aster_Bounding.x > 38 && Aster_Bounding.x <= 51.5){
+        return 2; // Medium
+    } else if (Aster_Bounding.x > 51.5 && Aster_Bounding.x <= 64.5){
+        return 3; // Big
+    }
+}
+
+// Break apart
+void Asteroids::breakApart(){
+    int size = checkSize();
+    switch (size){
+        case 3:
+            for (int i = 0; i < 3; ++i){
+                Asteroids* newAsteroids3 = new Asteroids(enemy_pos, Vector2{0.0f, 0.0f});
+                newAsteroids3->setSpeedTowards(player.getPLPos(), 150.0f);
+                newAsteroids3->asterScale = (GetRandomValue(85 ,126)/100.0f);
+            }
+            break;
+        case 2:
+            for (int i = 0; i < 1; ++i){
+                Asteroids* newAsteroids2 = new Asteroids(enemy_pos, Vector2{0.0f, 0.0f});
+                newAsteroids2->asterScale = (GetRandomValue(85 ,126)/100.0f);
+            }
+            break;
+        case 1:
+            setActive(false);
+            break;
+    } 
 }
 
 // Spawn the asteroid at a random edge of the screen
