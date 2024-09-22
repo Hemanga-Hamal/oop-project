@@ -71,7 +71,7 @@ int main() {
                 }
 
                 if (asteroids[j]->isActive()) {
-                    activeAsteroids++; // Count active asteroids
+                    activeAsteroids++; 
                 }
                 if (j < asteroids.size()) ++j;
             }
