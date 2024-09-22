@@ -60,7 +60,6 @@ int main() {
             for (size_t j = 0; j < asteroids.size(); ++j) {
                 if (it->EnemyCollisionCheck(asteroids[j]->getEnemyPos(), asteroids[j]->getAsteroidsBounding())) {
                     asteroids[j]->takeDamage(it->getProjDamage());
-                    player.decrementBulletCount();
 
                     // Spawn new asteroid and remove the destroyed one
                     auto newAsteroid = std::make_unique<Asteroids>(Vector2{0.0f, 0.0f}, Vector2{0.0f, 0.0f});
