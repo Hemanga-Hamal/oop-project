@@ -10,38 +10,27 @@ Asteroids::Asteroids(Vector2 pos, Vector2 speed) : Enemy(pos, speed, 0), active(
     enemy_health = static_cast<int>(20 * asterScale);
     asterDmg = static_cast<int>(10 * asterScale);
     Aster_Bounding = { static_cast<float>(30 * asterScale), static_cast<float>(30 * asterScale) };
-    // Starts random seed on each run by taking time since epoch
-    std::srand(static_cast<unsigned int>(std::time(0)));
     spawnAtEdge();
 }
 
 // Spawn the asteroid at a random edge of the screen
 void Asteroids::spawnAtEdge() {
-    // Generates a random value between 0 and 3 for the 4 edges of the screen
     int edgeCase = std::rand() % 4;
     switch (edgeCase) {
         case 0:
-            // Random x coord within width range
             enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
-            // Y coord at the top
-            enemy_pos.y = 0;
+            enemy_pos.y = 0; // Top
             break;
         case 1:
-            // Random x coord within width range
             enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
-            // Y coord at the bottom
-            enemy_pos.y = GetScreenHeight();
+            enemy_pos.y = GetScreenHeight(); // Bottom
             break;
         case 2:
-            // X coord on the left 
-            enemy_pos.x = 0;
-            // Random y coord within height range
+            enemy_pos.x = 0; // Left
             enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
             break;
         case 3:
-            // X coord on the right
-            enemy_pos.x = GetScreenWidth();
-            // Random y coord within height range
+            enemy_pos.x = GetScreenWidth(); // Right
             enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
             break;
     }
@@ -126,8 +115,9 @@ void Asteroids::setSpeedTowards(Vector2 target, float baseSpeed) {
 
 // Handles asteroid spawning after destruction
 void Asteroids::spawnNewAsteroid(Vector2 playerPos, float baseSpeed) {
-    spawnAtEdge();  // Reuse the spawnAtEdge logic
-    setSpeedTowards(playerPos, baseSpeed);  // Set speed towards the player
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    spawnAtEdge();  
+    setSpeedTowards(playerPos, baseSpeed); 
 }
 
 // Handles collision with the player and asteroid destruction

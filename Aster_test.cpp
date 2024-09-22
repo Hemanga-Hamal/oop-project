@@ -3,12 +3,16 @@
 #include "Player.h"
 #include "Asteroids.h"
 #include <vector>
+#include <ctime> // To seed random number generator
 
 int main() {
     // Initialize window
     const int screenWidth = 800;
     const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, "Asteroids Test");
+
+    // Seed the random number generator only once
+    srand(static_cast<unsigned int>(time(0)));
 
     // Initialize player
     Player player({screenWidth / 2.0f, screenHeight / 2.0f}, 100);
@@ -18,9 +22,10 @@ int main() {
 
     // Create initial set of asteroids
     for (int i = 0; i < 6; i++) {
-        Asteroids* newAsteroid = new Asteroids({0.0f, 0.0f}, {0.0f, 0.0f});
-        newAsteroid->spawnNewAsteroid(player.getPLPos(), 150.0f);
-        asteroids.push_back(newAsteroid);
+    Asteroids* newAsteroid = new Asteroids({0.0f, 0.0f}, {0.0f, 0.0f});
+    newAsteroid->spawnAtEdge();
+    newAsteroid->setSpeedTowards(player.getPLPos(), 150.0f);
+    asteroids.push_back(newAsteroid);
     }
 
     SetTargetFPS(60);
@@ -33,10 +38,9 @@ int main() {
         player.update(deltaTime);
 
         // Update all asteroids and handle collisions
-        for (size_t i = 0; i < asteroids.size(); ) {
+        for (size_t i = 0; i < asteroids.size();) {
             asteroids[i]->update(deltaTime, player.getPLPos(), 150.0f, player);
             if (!asteroids[i]->isActive()) {
-                // Remove inactive asteroid and spawn a new one
                 Asteroids* newAsteroid = new Asteroids({0.0f, 0.0f}, {0.0f, 0.0f});
                 newAsteroid->spawnNewAsteroid(player.getPLPos(), 150.0f);
                 asteroids.push_back(newAsteroid);
