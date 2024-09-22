@@ -32,9 +32,27 @@ int main() {
 
     while (!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
-        timeAlive += deltaTime;
+
+        // Input handling, even if the game is over
+        if (gameOver && IsKeyPressed(KEY_R)) {
+            // Reset player and asteroids
+            player = Player({screenWidth / 2.0f, screenHeight / 2.0f}, 100);
+            asteroids.clear();
+            for (int i = 0; i < 6; i++) {
+                auto newAsteroid = std::make_unique<Asteroids>(Vector2{0.0f, 0.0f}, Vector2{0.0f, 0.0f});
+                newAsteroid->spawnAtEdge();
+                newAsteroid->setSpeedTowards(player.getPLPos(), 150.0f);
+                asteroids.push_back(std::move(newAsteroid));
+            }
+            timeAlive = 0.0f;
+            gameOver = false;
+            continue;  // Restart the game loop immediately after reset
+        }
 
         if (!gameOver) {
+            // Update time alive only when game is running
+            timeAlive += deltaTime;
+
             // Update player
             player.update(deltaTime);
 
@@ -48,8 +66,9 @@ int main() {
 
             // Update asteroids
             for (size_t j = 0; j < asteroids.size(); ) {
+                bool asteroidDestroyed = false;
                 asteroids[j]->update(deltaTime, playerPos, 150.0f, player, asteroids);
-                
+
                 // Check for collisions with projectiles
                 auto& projectiles = player.getProjectiles();
                 for (auto it = projectiles.begin(); it != projectiles.end(); ) {
@@ -60,20 +79,22 @@ int main() {
                         if (!asteroids[j]->isActive()) {
                             asteroids[j]->breakApart(asteroids);
                             asteroids.erase(asteroids.begin() + j);
-                            break; 
+                            asteroidDestroyed = true;
+                            break;
                         }
 
                         it = projectiles.erase(it);
-                        break;
                     } else {
                         ++it;
                     }
                 }
 
-                if (asteroids[j]->isActive()) {
-                    activeAsteroids++; 
+                if (!asteroidDestroyed) {
+                    if (asteroids[j]->isActive()) {
+                        activeAsteroids++;
+                    }
+                    ++j;
                 }
-                if (j < asteroids.size()) ++j;
             }
 
             // Update projectiles and check for off-screen
@@ -87,7 +108,7 @@ int main() {
                     player.decrementBulletCount();
                     it = projectiles.erase(it);
                 } else {
-                    ++it; 
+                    ++it;
                 }
             }
 
@@ -96,7 +117,7 @@ int main() {
 
             // Total active objects
             int totalActive = activeAsteroids + activeProjectiles;
-            
+
             // Drawing
             BeginDrawing();
             ClearBackground(RAYWHITE);
@@ -108,7 +129,7 @@ int main() {
                 }
                 DrawText(TextFormat("Player Health: %i", player.getPLHealth()), 10, 10, 20, DARKGRAY);
                 DrawText(TextFormat("Active Bullets: %d", player.getActiveBulletCount()), 10, 30, 20, DARKGRAY);
-                DrawText(TextFormat("Active Asteroids: %d", activeAsteroids), 10, 50, 20, DARKGRAY); 
+                DrawText(TextFormat("Active Asteroids: %d", activeAsteroids), 10, 50, 20, DARKGRAY);
                 DrawText(TextFormat("Total Active: %d", totalActive), 10, 90, 20, DARKGRAY);
                 DrawText(TextFormat("Time Alive: %.1f seconds", timeAlive), 10, 110, 20, DARKGRAY);
             } else {
@@ -119,20 +140,17 @@ int main() {
 
             DrawText(TextFormat("FPS: %i", GetFPS()), 10, 130, 20, DARKGRAY);
             EndDrawing();
+        } else {
+            // Draw Game Over screen if gameOver == true
+            BeginDrawing();
+            ClearBackground(RAYWHITE);
 
-            // Game restart handling
-            if (gameOver && IsKeyPressed(KEY_R)) {
-                player = Player({screenWidth / 2.0f, screenHeight / 2.0f}, 100);
-                asteroids.clear();
-                for (int i = 0; i < 6; i++) {
-                    auto newAsteroid = std::make_unique<Asteroids>(Vector2{0.0f, 0.0f}, Vector2{0.0f, 0.0f});
-                    newAsteroid->spawnAtEdge();
-                    newAsteroid->setSpeedTowards(player.getPLPos(), 150.0f);
-                    asteroids.push_back(std::move(newAsteroid));
-                }
-                timeAlive = 0.0f;
-                gameOver = false;
-            }
+            DrawText("GAME OVER", screenWidth / 2 - 100, screenHeight / 2 - 50, 40, RED);
+            DrawText(TextFormat("Time Alive: %.2f seconds", timeAlive), screenWidth / 2 - 120, screenHeight / 2, 20, DARKGRAY);
+            DrawText("Press [R] to restart or [ESC] to quit", screenWidth / 2 - 150, screenHeight / 2 + 40, 20, DARKGRAY);
+            DrawText(TextFormat("FPS: %i", GetFPS()), 10, 130, 20, DARKGRAY);
+
+            EndDrawing();
         }
     }
 
