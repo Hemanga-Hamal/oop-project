@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "raylib.h"
+#include <memory>
 
 class Asteroids : public Enemy {
 private:
@@ -28,7 +29,7 @@ public:
 
     // Check and break apart
     int checkSize();
-    void breakApart();
+    void breakApart(std::vector<std::unique_ptr<Asteroids>>& asteroidsList);
 
     // Take Damage
     void takeDamage(int damage);
@@ -55,6 +56,6 @@ public:
     bool handlePlayerCollision(Vector2 playerPos, Vector2 playerBounding, float pl_rot, Player& player);
 
     // Update asteroid state, check collisions, and respawn if necessary
-    void update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player);
+    void update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player, std::vector<std::unique_ptr<Asteroids>>& asteroidsList);
     void update(float deltaTime) override;
 };

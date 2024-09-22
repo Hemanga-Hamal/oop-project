@@ -22,29 +22,47 @@ int Asteroids::checkSize(){
     } else if (Aster_Bounding.x > 51.5 && Aster_Bounding.x <= 64.5){
         return 3; // Big
     }
+    else {return 0;}
 }
 
 // Break apart
-void Asteroids::breakApart(){
+void Asteroids::breakApart(std::vector<std::unique_ptr<Asteroids>>& asteroidsList) {
     int size = checkSize();
-    switch (size){
-        case 3:
-            for (int i = 0; i < 3; ++i){
-                Asteroids* newAsteroids3 = new Asteroids(enemy_pos, Vector2{0.0f, 0.0f});
-                newAsteroids3->setSpeedTowards(player.getPLPos(), 150.0f);
-                newAsteroids3->asterScale = (GetRandomValue(85 ,126)/100.0f);
-            }
+    int numNewAsteroids = 0;
+
+    switch (size) {
+        case 3: // Big asteroid
+            numNewAsteroids = 3;
             break;
-        case 2:
-            for (int i = 0; i < 1; ++i){
-                Asteroids* newAsteroids2 = new Asteroids(enemy_pos, Vector2{0.0f, 0.0f});
-                newAsteroids2->asterScale = (GetRandomValue(85 ,126)/100.0f);
-            }
+        case 2: // Medium asteroid
+            numNewAsteroids = 2;
             break;
-        case 1:
+        case 1: // Small asteroid
             setActive(false);
-            break;
-    } 
+            return;
+    }
+
+    for (int i = 0; i < numNewAsteroids; ++i) {
+        // Use std::make_unique to create a new asteroid
+        auto newAsteroid = std::make_unique<Asteroids>(enemy_pos, Vector2{0.0f, 0.0f});
+
+        // Set the new asteroid's scale to be smaller than the current one
+        newAsteroid->asterScale = (size == 3) ? 1.25f : 0.85f;
+        newAsteroid->Aster_Bounding = { static_cast<float>(30 * newAsteroid->asterScale), 
+                                         static_cast<float>(30 * newAsteroid->asterScale) };
+
+        float randomAngle = GetRandomValue(0, 360) * DEG2RAD;
+        Vector2 randomDir = { cosf(randomAngle), sinf(randomAngle) };
+        randomDir = Vector2Normalize(randomDir);
+
+        float speedFactor = (size == 3) ? 120.0f : 180.0f;
+        newAsteroid->setEnemySpeed(Vector2Scale(randomDir, speedFactor));
+
+        // Add new asteroid to the broken asteroids list
+        asteroidsList.push_back(std::move(newAsteroid));
+    }
+
+    setActive(false);
 }
 
 // Spawn the asteroid at a random edge of the screen
@@ -173,13 +191,13 @@ bool Asteroids::handlePlayerCollision(Vector2 playerPos, Vector2 playerBounding,
 }
 
 // Update asteroid state, check collisions, respawn if necessary
-void Asteroids::update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player) {
+void Asteroids::update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player, std::vector<std::unique_ptr<Asteroids>>& asteroidsList) {
     if (!active) return;
 
     movement(deltaTime);
 
     if (handlePlayerCollision(player.getPLPos(), player.getBoundingBox(), 0.0f, player)) {
-        spawnNewAsteroid(player.getPLPos(), baseSpeed);
+        breakApart(asteroidsList);
     } 
     else if (!isActive()) {
         spawnNewAsteroid(player.getPLPos(), baseSpeed);
