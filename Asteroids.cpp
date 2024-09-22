@@ -32,10 +32,10 @@ void Asteroids::breakApart(std::vector<std::unique_ptr<Asteroids>>& asteroidsLis
 
     switch (size) {
         case 3: // Big asteroid
-            numNewAsteroids = 3;
+            numNewAsteroids = 2;
             break;
         case 2: // Medium asteroid
-            numNewAsteroids = 2;
+            setActive(false);
             break;
         case 1: // Small asteroid
             setActive(false);
