@@ -17,6 +17,7 @@ Vector2 Player::getPLPos()          const { return pl_pos;           }
 Vector2 Player::getPLSpeed()        const { return pl_speed;         }
 Vector2 Player::getBoundingBox()    const { return pl_BoundingBox;   }
 Vector2 Player::getPlayershotDir()  const { return v1;               }
+int Player::getActiveBulletCount()  const {return activeBulletCount; }
 int Player::getPLHealth()           const { return pl_health;        }
 float Player::getRotation()         const { return pl_rot;           }
 
@@ -37,8 +38,13 @@ void Player::movement(float deltaTime) {
 }
 
 //shoot
-int Player::getActiveBulletCount() const {
-        return activeBulletCount;
+std::vector<PlayerProj>& Player::getProjectiles() { return projectiles;}
+
+void Player::decrementBulletCount() {
+    if (activeBulletCount > 0) {
+        --activeBulletCount;
+    }
+    activeBulletCount = std::max(activeBulletCount, 0);
 }
 
 void Player::shoot() {

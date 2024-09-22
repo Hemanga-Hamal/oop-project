@@ -22,7 +22,7 @@ bool PlayerProj::isActive() const {
     return active;
 }
 
-// Check for edge collision
+//Collision
 bool PlayerProj::checkEdgeCollision() {
     if (proj_pos.x < 0 || proj_pos.x > GetScreenWidth() ||
         proj_pos.y < 0 || proj_pos.y > GetScreenHeight()) {
@@ -30,6 +30,29 @@ bool PlayerProj::checkEdgeCollision() {
         return true;    
     }
     return false;
+}
+
+bool PlayerProj::EnemyCollisionCheck(Vector2 enemy_pos, Vector2 enemy_bounding) {
+    if (!active) return false;
+
+    Vector2 relativePos = Vector2Subtract(proj_pos, enemy_pos);
+    float normX = relativePos.x / (enemy_bounding.x / 2);
+    float normY = relativePos.y / (enemy_bounding.y / 2);
+    
+    bool insideEllipse = (normX * normX + normY * normY <= 1.0f);
+    if (insideEllipse) {
+        active = false;
+        return true;
+    }
+
+    float angle = atan2f(relativePos.y, relativePos.x);
+    float ellipseX = (enemy_bounding.x / 2) * cosf(angle);
+    float ellipseY = (enemy_bounding.y / 2) * sinf(angle);
+
+    float dist_x = relativePos.x - ellipseX;
+    float dist_y = relativePos.y - ellipseY;
+    float distance = sqrtf(dist_x * dist_x + dist_y * dist_y);
+    return distance < (lineThickness);
 }
 
 // Update and Render

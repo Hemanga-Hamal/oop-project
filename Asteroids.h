@@ -26,6 +26,9 @@ public:
     Vector2 getAsteroidsBounding() const;
     bool isActive() const;
 
+    //Take Damage
+    void takeDamage(int damage);
+    
     // Movement
     void movement(float deltaTime) override;
 

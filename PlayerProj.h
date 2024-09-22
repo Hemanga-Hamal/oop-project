@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include "Projectiles.h"
 
-class PlayerProj : protected Projectiles{
+class PlayerProj : public Projectiles{
 private:
     //stats
     float ProjLength = 10.0f;
@@ -31,6 +31,7 @@ public:
 
     //Collision
     bool checkEdgeCollision();
+    bool EnemyCollisionCheck(Vector2 enemy_pos, Vector2 enempy_bounding);
 
     //Render and Update
     void draw();

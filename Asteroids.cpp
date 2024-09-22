@@ -6,7 +6,7 @@
 
 // Constructor
 Asteroids::Asteroids(Vector2 pos, Vector2 speed) : Enemy(pos, speed, 0), active(true) {
-    asterScale = (GetRandomValue(85, 215) / 100.0f);  // Scale range updated
+    asterScale = (GetRandomValue(85, 215) / 100.0f); 
     enemy_health = static_cast<int>(20 * asterScale);
     asterDmg = static_cast<int>(10 * asterScale);
     Aster_Bounding = { static_cast<float>(30 * asterScale), static_cast<float>(30 * asterScale) };
@@ -48,6 +48,11 @@ int Asteroids::getAsteroidsDamage() const { return asterDmg; }
 float Asteroids::getAsteroidsScale() const { return asterScale; }
 Vector2 Asteroids::getAsteroidsBounding() const { return Aster_Bounding; }
 bool Asteroids::isActive() const { return active; }
+
+//Take damage
+void Asteroids::takeDamage(int damage){
+    enemy_health -= damage;
+}
 
 // Movement
 void Asteroids::movement(float deltaTime) {

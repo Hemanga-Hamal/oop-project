@@ -24,6 +24,9 @@ public:
     Vector2 getProjPos();
     int getProjDamage();
 
+    //Collision
+    virtual bool EnemyCollisionCheck(Vector2 enemy_pos, Vector2 enempy_bounding) = 0;
+
     // Render
     virtual void draw() = 0;
 

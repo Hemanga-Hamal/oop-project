@@ -51,13 +51,15 @@ public:
     Vector2 getBoundingBox() const;
     Vector2 getPlayershotDir() const;
     int getPLHealth() const;
+    int getActiveBulletCount() const;
     float getRotation() const;
 
     // Movement
     void movement(float deltaTime);
 
     //Shoot
-    int getActiveBulletCount() const;
+    void decrementBulletCount();
+    std::vector<PlayerProj>& getProjectiles();
     void shoot();
 
     //Collision logic
