@@ -9,7 +9,7 @@ class Player {
 private:
     // Location
     Vector2 pl_pos;
-    Vector2 pl_speed = {100.0f, 100.0f};
+    Vector2 pl_speed = {0.0f, 0.0f};
     float pl_rot = 0;
 
     // Stats
@@ -22,6 +22,12 @@ private:
     Vector2 v1;
     Vector2 v2; 
     Vector2 v3;
+
+    //Movement
+    float maxSpeed = 300.0f;
+    Vector2 pl_acceleration = {0.0f, 0.0f};
+    float accelerationRate = 500.0f;
+    float friction = 0.01f;
 
     //Shoot
     std::vector<PlayerProj> projectiles;

@@ -21,12 +21,35 @@ int Player::getActiveBulletCount()  const {return activeBulletCount; }
 int Player::getPLHealth()           const { return pl_health;        }
 float Player::getRotation()         const { return pl_rot;           }
 
-// Movement
 void Player::movement(float deltaTime) {
-    if (IsKeyDown(KEY_W)) pl_pos.y -= pl_speed.y * deltaTime;
-    if (IsKeyDown(KEY_S)) pl_pos.y += pl_speed.y * deltaTime;
-    if (IsKeyDown(KEY_A)) pl_pos.x -= pl_speed.x * deltaTime;
-    if (IsKeyDown(KEY_D)) pl_pos.x += pl_speed.x * deltaTime;
+    // Reset acceleration each frame
+    pl_acceleration = {0.0f, 0.0f};
+
+    // Apply acceleration based on key presses
+    if (IsKeyDown(KEY_W)) pl_acceleration.y -= accelerationRate;
+    if (IsKeyDown(KEY_S)) pl_acceleration.y += accelerationRate;
+    if (IsKeyDown(KEY_A)) pl_acceleration.x -= accelerationRate;
+    if (IsKeyDown(KEY_D)) pl_acceleration.x += accelerationRate;
+
+    // Update speed based on acceleration
+    pl_speed.x += pl_acceleration.x * deltaTime;
+    pl_speed.y += pl_acceleration.y * deltaTime;
+
+    // Apply friction
+    pl_speed.x *= (1.0f - friction);
+    pl_speed.y *= (1.0f - friction);
+
+    // Clamp speed to maximum
+    float currentSpeed = sqrtf(pl_speed.x * pl_speed.x + pl_speed.y * pl_speed.y);
+    if (currentSpeed > maxSpeed) {
+        float scale = maxSpeed / currentSpeed;
+        pl_speed.x *= scale;
+        pl_speed.y *= scale;
+    }
+
+    // Move the player
+    pl_pos.x += pl_speed.x * deltaTime;
+    pl_pos.y += pl_speed.y * deltaTime;
 
     // Wrap around screen edges
     int screenWidth = GetScreenWidth();
