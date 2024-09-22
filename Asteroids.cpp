@@ -120,7 +120,10 @@ void Asteroids::setSpeedTowards(Vector2 target, float baseSpeed) {
 
 // Handles asteroid spawning after destruction
 void Asteroids::spawnNewAsteroid(Vector2 playerPos, float baseSpeed) {
-    std::srand(static_cast<unsigned int>(std::time(0)));
+    asterScale = (GetRandomValue(85, 215) / 100.0f); 
+    enemy_health = static_cast<int>(20 * asterScale);
+    asterDmg = static_cast<int>(10 * asterScale);
+    Aster_Bounding = { static_cast<float>(30 * asterScale), static_cast<float>(30 * asterScale) };
     spawnAtEdge();  
     setSpeedTowards(playerPos, baseSpeed); 
 }
