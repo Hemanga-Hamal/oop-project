@@ -27,9 +27,10 @@ int Asteroids::checkSize() {
 
 // Break apart the asteroid
 void Asteroids::breakApart(std::vector<std::unique_ptr<Asteroids>>& asteroidsList) {
-    int size = checkSize();
-    int numNewAsteroids = 0;
+    int size = checkSize();  // Determine size category of the asteroid
+    int numNewAsteroids = 0;  // How many smaller asteroids to spawn
 
+    // Determine how many smaller asteroids to spawn based on size
     switch (size) {
         case 3: // Big asteroid
             numNewAsteroids = 2;
@@ -38,29 +39,49 @@ void Asteroids::breakApart(std::vector<std::unique_ptr<Asteroids>>& asteroidsLis
             numNewAsteroids = 2;
             break; 
         case 1: // Small asteroid
-            setActive(false);
-            return; // Small asteroids are destroyed
+            setActive(false);  // Small asteroids are destroyed, no fragments
+            return;
     }
 
+    // Loop to create smaller asteroids
     for (int i = 0; i < numNewAsteroids; ++i) {
-        // Create a new asteroid and set its properties
+        // Create a new asteroid at the current position
         auto newAsteroid = std::make_unique<Asteroids>(enemy_pos, Vector2{0.0f, 0.0f});
-        newAsteroid->asterScale = 0.85f; // Adjust size
+        
+        // Set the new asteroid's position to match the original asteroid (redundancy)
+        newAsteroid->setEnemyPos(enemy_pos);
+
+        // Scale down the new asteroid's size based on the current asteroid's size
+        switch (size) {
+            case 3:  // Big asteroid -> Medium asteroid
+                newAsteroid->asterScale = 0.85f;
+                break;
+            case 2:  // Medium asteroid -> Small asteroid
+                newAsteroid->asterScale = 0.85f;
+                break;
+        }
+
+        // Adjust the bounding box based on the new scale
         newAsteroid->Aster_Bounding = { static_cast<float>(30 * newAsteroid->asterScale), 
                                          static_cast<float>(30 * newAsteroid->asterScale) };
 
+        // Assign a random direction for the smaller asteroids
         float randomAngle = GetRandomValue(0, 360) * DEG2RAD;
         Vector2 randomDir = { cosf(randomAngle), sinf(randomAngle)};
         randomDir = Vector2Normalize(randomDir);
 
-        float speedFactor = 180.0f; // Adjust speed for new asteroids
+        // Set speed for the smaller asteroids (randomized speed for dynamic behavior)
+        float speedFactor = GetRandomValue(120, 180);
         newAsteroid->setEnemySpeed(Vector2Scale(randomDir, speedFactor));
 
+        // Add the new smaller asteroid to the asteroids list
         asteroidsList.push_back(std::move(newAsteroid));
     }
 
-    setActive(false); // Mark this asteroid as inactive
+    // Mark the current asteroid as inactive
+    setActive(false);
 }
+
 
 // Spawn the asteroid at a random edge of the screen
 void Asteroids::spawnAtEdge() {
