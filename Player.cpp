@@ -161,8 +161,8 @@ void Player::update(float deltaTime) {
     //movement
     movement(deltaTime);
 
-    // Call the shoot method when the left mouse button is pressed
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    // Call the shoot method when the shoot key is pressed
+    if (IsKeyDown(KEY_SPACE)) {
         shoot();
     }
 
