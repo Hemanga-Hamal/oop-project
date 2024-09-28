@@ -5,6 +5,10 @@
 
 class ScoutAlien : public Enemy {
 private:
+    //stats
+    int health = 1;
+    Vector2 speed = {150,150};
+
     //flag
     bool active = true;
 
@@ -23,7 +27,7 @@ private:
 
 public:
     //Constructor and Destructor
-    ScoutAlien(Vector2 Pos, Vector2 Speed, int Health);
+    ScoutAlien(Vector2 Pos);
     ~ScoutAlien();
 
     //Setters

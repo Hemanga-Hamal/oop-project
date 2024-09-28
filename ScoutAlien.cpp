@@ -2,7 +2,7 @@
 #include "raymath.h"
 
 // Constructor and Destructor
-ScoutAlien::ScoutAlien(Vector2 pos, Vector2 speed, int health) : Enemy(pos, speed, health) {
+ScoutAlien::ScoutAlien(Vector2 pos) : Enemy(pos, speed, health) {
     escapeMode = false;
     randomMoveTimer = GetRandomValue(2, 5);
 }
@@ -40,14 +40,14 @@ void ScoutAlien::movement(float deltaTime, Vector2 playerPos) {
         }
     } else {
         randomMoveTimer -= deltaTime;
-        // If it's time to change direction, pick a new random direction
+        //  pick a new random direction if time
         if (randomMoveTimer <= 0.0f) {
             float randomAngle = GetRandomValue(0, 360) * DEG2RAD;
             Vector2 randomDir = { cosf(randomAngle), sinf(randomAngle) };
             enemy_speed = Vector2Scale(Vector2Normalize(randomDir), 100.0f); 
             randomMoveTimer = GetRandomValue(2, 5);
         }
-        
+
         enemy_pos.x += enemy_speed.x * deltaTime;
         enemy_pos.y += enemy_speed.y * deltaTime;
 
