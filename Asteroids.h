@@ -37,8 +37,9 @@ public:
     // Movement
     void movement(float deltaTime) override;
 
-    // Collision logic
+    // Collision logic  
     bool checkColPlayer(Vector2 playerPos, Vector2 playerBounding, float pl_rot);
+    bool handlePlayerCollision(Vector2 playerPos, Vector2 playerBounding, float pl_rot, Player& player);
 
     // Draw the asteroid
     void draw() override;
@@ -51,9 +52,6 @@ public:
 
     // Handles asteroid spawning after destruction
     void spawnNewAsteroid(Vector2 playerPos, float baseSpeed);
-
-    // Handles collision with the player and asteroid destruction
-    bool handlePlayerCollision(Vector2 playerPos, Vector2 playerBounding, float pl_rot, Player& player);
 
     // Update asteroid state, check collisions, and respawn if necessary
     void update(float deltaTime, Vector2 playerPos, float baseSpeed, Player& player, std::vector<std::unique_ptr<Asteroids>>& asteroidsList);
