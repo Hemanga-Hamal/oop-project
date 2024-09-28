@@ -12,6 +12,7 @@ ScoutAlien::~ScoutAlien (){}
 void ScoutAlien::setScoutSize(Vector2 newSize){size = newSize;}
 void ScoutAlien::setcollisionBox(Vector2 newBox){collisionBox = newBox;}
 void ScoutAlien::setScoutRotation(int newRotation){rotation = newRotation;}
+void ScoutAlien::setboolactive(bool newActive){active = newActive;}
 
 // Getters
 Vector2 ScoutAlien::getScoutSize(){return size;}

@@ -13,6 +13,7 @@ private:
     bool active = true;
 
     //movement
+    float escapeSpeed = 300.0f;
     float detectionRange = 200.0f;
     float randomMoveTimer;
     bool escapeMode = false;
@@ -34,6 +35,7 @@ public:
     void setScoutSize(Vector2 newSize);
     void setcollisionBox(Vector2 newBox);
     void setScoutRotation(int newRotation);
+    void setboolactive(bool newActive);
 
     //Getters
     Vector2 getScoutSize();
@@ -44,7 +46,6 @@ public:
     bool CheckCollisionBoxes(Vector2 entityPos, Vector2 entityBox);
 
     //Movement
-    float escapeSpeed = 300.0f;
     void movement(float deltaTime, Vector2 playerPos);
 
     //Updating and Rendering
