@@ -47,8 +47,7 @@ void ScoutAlien::movement(float deltaTime, Vector2 playerPos) {
             enemy_speed = Vector2Scale(Vector2Normalize(randomDir), 100.0f); 
             randomMoveTimer = GetRandomValue(2, 5);
         }
-
-        // Move the alien in the chosen direction
+        
         enemy_pos.x += enemy_speed.x * deltaTime;
         enemy_pos.y += enemy_speed.y * deltaTime;
 
