@@ -27,20 +27,29 @@ SRC_PLproj = PLproj_test.cpp PlayerProj.cpp Projectiles.cpp Player.cpp PlayerPro
 OBJ_PLproj = $(SRC_PLproj:.cpp=.o)
 EXEC_PLproj = PLproj_test.exe
 
-# Default target
-all: $(EXEC_PL) $(EXEC_ASTER) $(EXEC_PLproj)
+# Project files for Scout_test
+SRC_Scout = Scout_test.cpp ScoutAlien.cpp Player.cpp Enemy.cpp Asteroids.cpp PlayerProj.cpp Projectiles.cpp
+OBJ_Scout = $(SRC_Scout:.cpp=.o)
+EXEC_Scout = Scout_test.exe
 
-# Link the executable for PL_test with full static linking
+# Default target
+all: $(EXEC_PL) $(EXEC_ASTER) $(EXEC_PLproj) $(EXEC_Scout)
+
+# Link the executable for PL_test with full static linking -> Player
 $(EXEC_PL): $(OBJ_PL)
 	$(CXX) -o $(EXEC_PL) $(OBJ_PL) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
-# Link the executable for Aster_test with full static linking
+# Link the executable for Aster_test with full static linking -> Asteroids
 $(EXEC_ASTER): $(OBJ_ASTER)
 	$(CXX) -o $(EXEC_ASTER) $(OBJ_ASTER) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
-# Compilation rule for the executable with full static linking
+# Compilation rule for the executable with full static linking -> PlayerProj
 $(EXEC_PLproj): $(OBJ_PLproj)
 	$(CXX) -o $(EXEC_PLproj) $(OBJ_PLproj) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+
+# Compilation rule for the executable with full static linking -> Scout
+$(EXEC_Scout): $(OBJ_Scout)
+	$(CXX) -o $(EXEC_Scout) $(OBJ_Scout) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 # Compile C++ source files to object files
 %.o: %.cpp
