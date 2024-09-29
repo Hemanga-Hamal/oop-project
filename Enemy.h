@@ -5,32 +5,32 @@
 
 class Enemy{
     protected:
-        // Enemy stats
+        //Enemy stats
         Vector2 enemy_pos;
         Vector2 enemy_speed;
         int enemy_health;
 
     public:
-        // Constructor
+        //Constructor
         Enemy(Vector2 Pos, Vector2 Speed,int Health);
 
-        // Destructor
+        //Destructor
         virtual ~Enemy();
 
-        // Setters
+        //Setters
         void virtual setEnemyPos(Vector2) = 0;
         void virtual setEnemySpeed(Vector2) = 0;
         void virtual setEnemyHealth(int) = 0;
 
-        // Getters
+        //Getters
         Vector2 getEnemyPos();
         Vector2 getEnemySpeed();
         int getEnemyHealth();
 
-        // Movement
+        //Movement
         void virtual movement(float) = 0;
 
-        // Updating and Rendering
+        //Updating and Rendering
         void virtual draw() = 0;
         void virtual update(float deltaTime) = 0;
 };
