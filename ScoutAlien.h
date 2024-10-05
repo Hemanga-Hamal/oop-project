@@ -19,12 +19,12 @@ private:
     bool escapeMode = false;
     
     // Model
-    Vector2 size = {10, 10};
+    Vector2 size = {15, 15};
     int rotation = 0;
     Color color = RED;
 
     // Collision
-    Vector2 collisionBox = {10, 10};
+    Vector2 collisionBox = {15, 15};
 
 public:
     // Constructor and Destructor
