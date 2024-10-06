@@ -1,9 +1,9 @@
 #ifndef SCOUTALIEN_H
 #define SCOUTALIEN_H
 
-#include "Enemy.h"
+#include "Alien.h"
 
-class ScoutAlien : public Enemy {
+class ScoutAlien : public Alien {
 private:
     // Stats
     int health = 1;
@@ -19,12 +19,12 @@ private:
     bool escapeMode = false;
     
     // Model
-    Vector2 size = {10, 10};
-    int rotation = 0;
-    Color color = RED;
+    Vector2 alien_size = {10, 10};
+    int alien_rotation = 0;
+    Color alien_color = RED;
 
     // Collision
-    Vector2 collisionBox = {10, 10};
+    Vector2 alien_collision_box = {10, 10};
 
 public:
     // Constructor and Destructor
@@ -35,21 +35,21 @@ public:
     void setEnemyPos(Vector2 newPos) override;
     void setEnemySpeed(Vector2 newSpeed) override;
     void setScoutSize(Vector2 newSize);
-    void setcollisionBox(Vector2 newBox);
+    void setCollisionBox(Vector2 newBox);
     void setEnemyHealth(int newHealth) override;
     void setScoutRotation(int newRotation);
-    void setboolactive(bool newActive);
+    void setBoolActive(bool newActive);
     void setEscapeMode(bool newMode);
 
     // Getters
     Vector2 getScoutSize();
-    Vector2 getcollisionBox();
+    Vector2 getCollisionBox();
     int getScoutRotation();
-    bool getboolactive();
+    bool getBoolActive();
     bool getEscapeMode();
 
     // Collision detection
-    bool CheckCollisionBoxes(Vector2 entityPos, Vector2 entityBox);
+    bool checkCollisionBoxes(Vector2 entityPos, Vector2 entityBox);
 
     // Movement
     void movement(float deltaTime) override;  // For overriding the virtual function

@@ -6,15 +6,15 @@
 class Alien : public Enemy {
 private:
     //State
-    bool active = false;
+    bool alien_active = false;
 
     //Model
-    Vector2 size = {0, 0};
-    int rotation = 0;
-    Color color = RED;
+    Vector2 alien_size = {0, 0};
+    int alien_rotation = 0;
+    Color alien_color = RED;
 
     //Collision
-    Vector2 collisionBox = {0, 0};
+    Vector2 alien_collision_box = {0, 0};
 
 public:
     //Constructor and Destructor
