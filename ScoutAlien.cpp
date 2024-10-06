@@ -2,7 +2,7 @@
 #include "raymath.h"
 
 // Constructor and Destructor
-ScoutAlien::ScoutAlien(Vector2 pos) : Enemy(pos, {0,0}, 1) {
+ScoutAlien::ScoutAlien(Vector2 pos) : Alien(pos, {0,0}, 1) {
     this->enemy_speed = speed;
     this->enemy_health = health;
     escapeMode = false;
