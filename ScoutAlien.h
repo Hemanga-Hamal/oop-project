@@ -34,10 +34,10 @@ public:
     // Setters (Override pure virtual functions from Enemy)
     void setEnemyPos(Vector2 newPos) override;
     void setEnemySpeed(Vector2 newSpeed) override;
-    void setScoutSize(Vector2 newSize);
-    void setCollisionBox(Vector2 newBox);
+    void setAlienSize(Vector2 newSize) override;
+    void setCollisionBox(Vector2 newBox) override;
     void setEnemyHealth(int newHealth) override;
-    void setScoutRotation(int newRotation);
+    void setAlienRotation(int newRotation) override;
     void setBoolActive(bool newActive);
     void setEscapeMode(bool newMode);
 
@@ -49,7 +49,7 @@ public:
     bool getEscapeMode();
 
     // Collision detection
-    bool checkCollisionBoxes(Vector2 entityPos, Vector2 entityBox);
+    bool checkCollisionBox(Vector2 entityPos, Vector2 entityBox);
 
     // Movement
     void movement(float deltaTime) override;  // For overriding the virtual function

@@ -34,7 +34,7 @@ public:
     bool getBoolActive();
     
     //Collision Dectection
-    bool checkCollisionBoxes();
+    bool checkCollisionBox();
 };
 
 #endif

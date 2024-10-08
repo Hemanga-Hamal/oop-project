@@ -13,10 +13,10 @@ ScoutAlien::~ScoutAlien() {}
 // Setters
 void ScoutAlien::setEnemyPos(Vector2 newPos)            { enemy_pos = newPos; }
 void ScoutAlien::setEnemySpeed(Vector2 newSpeed)        { enemy_speed = newSpeed; }
-void ScoutAlien::setScoutSize(Vector2 newSize)          { alien_size = newSize; }
+void ScoutAlien::setAlienSize(Vector2 newSize)          { alien_size = newSize; }
 void ScoutAlien::setCollisionBox(Vector2 newBox)        { alien_collision_box = newBox; }
 void ScoutAlien::setEnemyHealth(int newHealth)          { enemy_health = newHealth; }
-void ScoutAlien::setScoutRotation(int newRotation)      { alien_rotation = newRotation; }
+void ScoutAlien::setAlienRotation(int newRotation)      { alien_rotation = newRotation; }
 void ScoutAlien::setBoolActive(bool newActive)          { active = newActive; }
 void ScoutAlien::setEscapeMode(bool newMode)            { escapeMode = newMode; }
 
@@ -28,7 +28,7 @@ bool ScoutAlien::getBoolActive()        { return active; }
 bool ScoutAlien::getEscapeMode()        { return escapeMode; }
 
 // Collision detection
-bool ScoutAlien::checkCollisionBoxes(Vector2 entityPos, Vector2 entityBox) {
+bool ScoutAlien::checkCollisionBox(Vector2 entityPos, Vector2 entityBox) {
     if (!active) return false;
     Vector2 relativePos = Vector2Subtract(enemy_pos, entityPos);
     Vector2 rotatedPos = Vector2Rotate(relativePos, -alien_rotation * DEG2RAD); 
