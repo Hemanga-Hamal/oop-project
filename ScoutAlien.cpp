@@ -2,7 +2,7 @@
 #include "raymath.h"
 
 // Constructor and Destructor
-ScoutAlien::ScoutAlien(Vector2 pos) : Enemy(pos, {0,0}, 1) {
+ScoutAlien::ScoutAlien(Vector2 pos) : Alien(pos, {0,0}, 1) {
     this->enemy_speed = speed;
     this->enemy_health = health;
     escapeMode = false;
@@ -13,27 +13,27 @@ ScoutAlien::~ScoutAlien() {}
 // Setters
 void ScoutAlien::setEnemyPos(Vector2 newPos)            { enemy_pos = newPos; }
 void ScoutAlien::setEnemySpeed(Vector2 newSpeed)        { enemy_speed = newSpeed; }
-void ScoutAlien::setScoutSize(Vector2 newSize)          { size = newSize; }
-void ScoutAlien::setcollisionBox(Vector2 newBox)        { collisionBox = newBox; }
+void ScoutAlien::setAlienSize(Vector2 newSize)          { alien_size = newSize; }
+void ScoutAlien::setCollisionBox(Vector2 newBox)        { alien_collision_box = newBox; }
 void ScoutAlien::setEnemyHealth(int newHealth)          { enemy_health = newHealth; }
-void ScoutAlien::setScoutRotation(int newRotation)      { rotation = newRotation; }
-void ScoutAlien::setboolactive(bool newActive)          { active = newActive; }
+void ScoutAlien::setAlienRotation(int newRotation)      { alien_rotation = newRotation; }
+void ScoutAlien::setBoolActive(bool newActive)          { active = newActive; }
 void ScoutAlien::setEscapeMode(bool newMode)            { escapeMode = newMode; }
 
 // Getters
-Vector2 ScoutAlien::getScoutSize()      { return size; }
-Vector2 ScoutAlien::getcollisionBox()   { return collisionBox; }
-int ScoutAlien::getScoutRotation()      { return rotation; }
-bool ScoutAlien::getboolactive()        { return active; }
+Vector2 ScoutAlien::getScoutSize()      { return alien_size; }
+Vector2 ScoutAlien::getCollisionBox()   { return alien_collision_box; }
+int ScoutAlien::getScoutRotation()      { return alien_rotation; }
+bool ScoutAlien::getBoolActive()        { return active; }
 bool ScoutAlien::getEscapeMode()        { return escapeMode; }
 
 // Collision detection
-bool ScoutAlien::CheckCollisionBoxes(Vector2 entityPos, Vector2 entityBox) {
+bool ScoutAlien::checkCollisionBox(Vector2 entityPos, Vector2 entityBox) {
     if (!active) return false;
     Vector2 relativePos = Vector2Subtract(enemy_pos, entityPos);
-    Vector2 rotatedPos = Vector2Rotate(relativePos, -rotation * DEG2RAD); 
-    bool insideBox = (rotatedPos.x >= -collisionBox.x / 2 && rotatedPos.x <= collisionBox.x / 2 
-                     && rotatedPos.y >= -collisionBox.y / 2 && rotatedPos.y <= collisionBox.y / 2);
+    Vector2 rotatedPos = Vector2Rotate(relativePos, -alien_rotation * DEG2RAD); 
+    bool insideBox = (rotatedPos.x >= -alien_collision_box.x / 2 && rotatedPos.x <=alien_collision_box.x / 2 
+                     && rotatedPos.y >= -alien_collision_box.y / 2 && rotatedPos.y <= alien_collision_box.y / 2);
     return insideBox;
 }
 
@@ -86,7 +86,7 @@ void ScoutAlien::movement(float deltaTime, Vector2 playerPos) {
 
 // Draw
 void ScoutAlien::draw() {
-    DrawRectangleV(enemy_pos, size, color);  
+    DrawRectangleV(enemy_pos, alien_size, alien_color);  
 }
 
 // Update
