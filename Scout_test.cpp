@@ -42,7 +42,7 @@ int main() {
             scout.update(deltaTime, player.getPLPos());
             auto &projectiles = player.getProjectiles();
             for (auto it = projectiles.begin(); it != projectiles.end(); ++it) {
-                if (CheckCollisionBoxes(it->getProjPos(), {10, 10})) {
+                if (checkCollisionBox(it->getProjPos(), {10, 10})) {
                     alienActive = false;
                     respawnTimer = GetRandomValue(10, 20);
                     break;
