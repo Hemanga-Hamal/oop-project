@@ -3,5 +3,5 @@
 .vscode/launch.json
 .vscode/settings.json
 .vscode/tasks.json
-
+highscores.txt
 Makefile
