@@ -73,7 +73,7 @@ void Player::decrementBulletCount() {
 void Player::shoot() {
     if (pl_shootTimeRemaining <= 0.0f) {
         pl_shootTimeRemaining = pl_shootdelay;
-        if (projectiles.size() < maxProjectiles) {
+        if (projectiles.size() < static_cast<std::vector<PlayerProj>::size_type>(maxProjectiles)) {
             Vector2 direction = { cosf(pl_rot - (float)PI / 2.0f), sinf(pl_rot - (float)PI / 2.0f) };
             PlayerProj newProj(pl_pos, direction);
             projectiles.push_back(newProj);
@@ -81,6 +81,7 @@ void Player::shoot() {
         }
     }
 }
+
 
 //Collision logic
 bool Player::checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding) {

@@ -7,18 +7,18 @@
 
 class Player {
 private:
-    // Location
+    //Location
     Vector2 pl_pos;
     Vector2 pl_speed = {0.0f, 0.0f};
     float pl_rot = 0;
 
-    // Stats
+    //Stats
     int pl_health;
 
-    // Bounding ellipse
+    //Bounding ellipse
     Vector2 pl_BoundingBox = {10.0f, 20.0f};
 
-    //player vertices
+    //Player vertices
     Vector2 v1;
     Vector2 v2; 
     Vector2 v3;
@@ -36,7 +36,7 @@ private:
     float pl_shootTimeRemaining = 0.0f;
     float pl_shootdelay = 0.3f;
 
-    //damage indicator
+    //Damage indicator
     Color pl_colour;
     float pl_flashRedTimeRemaining = 0.0f;
     float flashRedDuration = 0.5f;

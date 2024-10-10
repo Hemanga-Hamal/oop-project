@@ -5,28 +5,28 @@
 
 class PlayerProj : public Projectiles{
 private:
-    //stats
+    //Stats
     float ProjLength = 10.0f;
     float ProjSetSpeed = 400.0f;
 
-    //tag
+    //State
     bool active;
 
-    //model
+    //Model
     float lineThickness = 3.0f;
     Color PlayerProjCol = BLUE;
 
 public:
-    // Constructor and Destructor
+    //Constructor and Destructor
     PlayerProj(Vector2 pos, Vector2 speed);
     ~PlayerProj();
 
-    //setters
+    //Setters
     void setProjPos(Vector2);
     void setProjSpeed(Vector2);
     void setProjDamage(int);
 
-    //getter
+    //Getters
     bool isActive() const;
 
     //Collision

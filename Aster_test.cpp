@@ -109,7 +109,7 @@ int main() {
                 Vector2 projPos = it->getProjPos();
                 if (projPos.x < 0 || projPos.x > screenWidth || projPos.y < 0 || projPos.y > screenHeight || !it->isActive()) {
                     player.decrementBulletCount();
-                    it = projectiles.erase(it);  // Remove off-screen or inactive projectiles
+                    it = projectiles.erase(it);
                 } else {
                     ++it;
                 }
