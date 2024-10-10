@@ -1,2 +1,4 @@
-Makefile
 .vscode/launch.json
+Makefile
+highscores.txt
+
