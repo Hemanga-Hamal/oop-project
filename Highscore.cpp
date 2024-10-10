@@ -44,7 +44,6 @@ void displayHighScores(const std::vector<Highscore>& highscores) {
 
 std::string getPlayerName() {
     std::string name;
-    bool firstKeyPress = true;
     while (name.size() < 3) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
