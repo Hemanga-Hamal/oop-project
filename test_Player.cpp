@@ -28,35 +28,6 @@ void testPlayerMovement() {
 
     std::cout << "testPlayerMovement passed!" << std::endl;
 }
-#include <iostream>
-#include <cassert>
-#include "Player.h"
-
-void testPlayerInitialization() {
-    Vector2 initialPos = {0.0f, 0.0f};
-    int initialHealth = 100;
-    Player player(initialPos, initialHealth);
-
-    assert(player.getPLPos().x == initialPos.x);
-    assert(player.getPLPos().y == initialPos.y);
-    assert(player.getPLHealth() == initialHealth);
-
-    std::cout << "testPlayerInitialization passed!" << std::endl;
-}
-
-void testPlayerMovement() {
-    Vector2 initialPos = {0.0f, 0.0f};
-    int initialHealth = 100;
-    Player player(initialPos, initialHealth);
-
-    player.setPLSpeed({10.0f, 0.0f});
-    player.movement(1.0f); // Move for 1 second
-
-    assert(player.getPLPos().x == 10.0f);
-    assert(player.getPLPos().y == 0.0f);
-
-    std::cout << "testPlayerMovement passed!" << std::endl;
-}
 
 void testPlayerShoot() {
     Vector2 initialPos = {0.0f, 0.0f};
