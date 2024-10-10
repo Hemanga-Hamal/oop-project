@@ -10,7 +10,7 @@ STATIC_FLAGS = -static -static-libgcc -static-libstdc++
 LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm $(STATIC_FLAGS)
 
 # Paths
-RAYLIB_PATH = C:/raylib/raylib
+RAYLIB_PATH = /home/aisihco/raylib/src
 
 # Project files for PL_test
 SRC_PL =  PL_test.cpp Player.cpp Enemy.cpp Asteroids.cpp PlayerProj.cpp Projectiles.cpp
