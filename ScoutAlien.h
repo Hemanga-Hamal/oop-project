@@ -38,7 +38,7 @@ public:
     void setCollisionBox(Vector2 newBox) override;
     void setEnemyHealth(int newHealth) override;
     void setAlienRotation(int newRotation) override;
-    void setBoolActive(bool newActive);
+    void setBoolActive(bool newActive) override;
     void setEscapeMode(bool newMode);
 
     // Getters
