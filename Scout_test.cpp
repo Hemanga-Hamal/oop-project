@@ -9,7 +9,6 @@ void ResetGame(Player &player, ScoutAlien &scout, int screenWidth, int screenHei
     scout.setEnemyPos({(float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight)});
     scout.setEscapeMode(false);
     scout.setBoolActive(true);
-    scout.setBoolActive(true);
 }
 
 // Main function
@@ -26,7 +25,6 @@ int main() {
     // Initialize the scout alien at a random position
     ScoutAlien scout({(float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight)});
 
-    //
     float respawnTimer = 0.0f;
     bool alienActive = true;
 
@@ -51,7 +49,6 @@ int main() {
             }
 
             if (!scout.getBoolActive()) {
-            if (!scout.getBoolActive()) {
                 alienActive = false;
                 respawnTimer = GetRandomValue(10, 20);
             }
@@ -60,7 +57,6 @@ int main() {
             if (respawnTimer <= 0.0f) {
                 scout.setEnemyPos({(float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight)});
                 scout.setEscapeMode(false);
-                scout.setBoolActive(true);
                 scout.setBoolActive(true);
                 alienActive = true;
             }
@@ -80,9 +76,12 @@ int main() {
         DrawText(TextFormat("Player Health: %i", player.getPLHealth()), 10, 10, 20, DARKGRAY);
 
         // respawn timer display
-        if (!alienActive) { DrawText(TextFormat("ScoutAlien Respawn in: %.1f seconds", respawnTimer), 10, 30, 20, RED);}
+        if (!alienActive) {
+            DrawText(TextFormat("ScoutAlien Respawn in: %.1f seconds", respawnTimer), 10, 30, 20, RED);
+        }
 
-        if (alienActive) {const char* modeText = scout.getEscapeMode() ? "Mode: Escape" : "Mode: Exploration";
+        if (alienActive) {
+            const char* modeText = scout.getEscapeMode() ? "Mode: Escape" : "Mode: Exploration";
             DrawText(modeText, 10, 50, 20, BLUE);
         }
 
