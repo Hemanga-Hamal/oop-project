@@ -56,6 +56,7 @@ int main() {
 
     bool showHighScoreMenu = false;
     bool hasntSaved = true;
+    int bulletCollisionCounter = 0;
 
     while (!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
@@ -64,13 +65,15 @@ int main() {
             ResetGame(player, asteroids, screenWidth, screenHeight);
             timeAlive = 0.0f;
             gameOver = false;
+            hasntSaved = true;
+            bulletCollisionCounter = 0;
             continue;
         }
 
         if (gameOver && IsKeyPressed(KEY_T) && hasntSaved) {
             if (!showHighScoreMenu) {
                 Highscore newScore;
-                newScore.score = static_cast<int>(timeAlive * 100);
+                newScore.score = static_cast<int>(timeAlive + 10 * bulletCollisionCounter);
                 newScore.name = getPlayerName();
                 saveHighScore(newScore, fileName); 
                 highscores.push_back(newScore); 
@@ -99,13 +102,13 @@ int main() {
             // Update asteroids and handle collisions with projectiles
             for (size_t j = 0; j < asteroids.size();) {
                 asteroids[j]->update(deltaTime, playerPos, 150.0f, player, asteroids);
-
                 bool asteroidDestroyed = false;
                 auto &projectiles = player.getProjectiles();
                 for (auto it = projectiles.begin(); it != projectiles.end();) {
                     if (it->EnemyCollisionCheck(asteroids[j]->getEnemyPos(), asteroids[j]->getAsteroidsBounding())) {
                         asteroids[j]->setActive(false);
                         it = projectiles.erase(it);  // Remove the projectile
+                        bulletCollisionCounter++;
                     } else {
                         ++it;
                     }
