@@ -19,12 +19,12 @@ private:
     bool escapeMode = false;
     
     // Model
-    Vector2 alien_size = {10, 10};
-    int alien_rotation = 0;
-    Color alien_color = RED;
+    Vector2 size = {15, 15};
+    int rotation = 0;
+    Color color = RED;
 
     // Collision
-    Vector2 alien_collision_box = {10, 10};
+    Vector2 collisionBox = {15, 15};
 
 public:
     // Constructor and Destructor
@@ -38,7 +38,7 @@ public:
     void setCollisionBox(Vector2 newBox) override;
     void setEnemyHealth(int newHealth) override;
     void setAlienRotation(int newRotation) override;
-    void setBoolActive(bool newActive);
+    void setBoolActive(bool newActive) override;
     void setEscapeMode(bool newMode);
 
     // Getters
