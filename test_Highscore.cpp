@@ -55,6 +55,7 @@ int main() {
     loadHighScores(highscores, fileName);
 
     bool showHighScoreMenu = false;
+    bool hasntSaved = true;
 
     while (!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
@@ -66,7 +67,7 @@ int main() {
             continue;
         }
 
-        if (gameOver && IsKeyPressed(KEY_T)) {
+        if (gameOver && IsKeyPressed(KEY_T) && hasntSaved) {
             if (!showHighScoreMenu) {
                 Highscore newScore;
                 newScore.score = static_cast<int>(timeAlive * 100);
@@ -78,6 +79,7 @@ int main() {
             } else {
                 // If already showing highscores, toggle back
                 showHighScoreMenu = false; 
+                hasntSaved = false;
             }
         }
 

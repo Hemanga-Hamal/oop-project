@@ -44,6 +44,7 @@ void displayHighScores(const std::vector<Highscore>& highscores) {
 
 std::string getPlayerName() {
     std::string name;
+    bool firstChar = true;
     while (name.size() < 3) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -64,6 +65,10 @@ std::string getPlayerName() {
             if (!name.empty()) {
                 name.pop_back(); // Removes last character
             }
+        }
+        if (firstChar) {
+            name.pop_back();
+            firstChar = false;
         }
         // Draw the current input
         DrawText(name.c_str(), 250, 400, 20, DARKGRAY);
