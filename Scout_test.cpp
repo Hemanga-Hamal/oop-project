@@ -9,6 +9,7 @@ void ResetGame(Player &player, ScoutAlien &scout, int screenWidth, int screenHei
     scout.setEnemyPos({(float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight)});
     scout.setEscapeMode(false);
     scout.setBoolActive(true);
+    scout.setBoolActive(true);
 }
 
 // Main function
@@ -42,13 +43,14 @@ int main() {
             scout.update(deltaTime, player.getPLPos());
             auto &projectiles = player.getProjectiles();
             for (auto it = projectiles.begin(); it != projectiles.end(); ++it) {
-                if (checkCollisionBox(it->getProjPos(), {10, 10})) {
+                if (scout.checkCollisionBox(it->getProjPos(), {10, 10})) {
                     alienActive = false;
                     respawnTimer = GetRandomValue(10, 20);
                     break;
                 }
             }
 
+            if (!scout.getBoolActive()) {
             if (!scout.getBoolActive()) {
                 alienActive = false;
                 respawnTimer = GetRandomValue(10, 20);
@@ -58,6 +60,7 @@ int main() {
             if (respawnTimer <= 0.0f) {
                 scout.setEnemyPos({(float)GetRandomValue(0, screenWidth), (float)GetRandomValue(0, screenHeight)});
                 scout.setEscapeMode(false);
+                scout.setBoolActive(true);
                 scout.setBoolActive(true);
                 alienActive = true;
             }

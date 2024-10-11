@@ -4,7 +4,7 @@
 #include "Enemy.h"
 
 class Alien : public Enemy {
-private:
+protected:
     //State
     bool alien_active = false;
 
