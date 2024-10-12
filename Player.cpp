@@ -20,6 +20,8 @@ Vector2 Player::getPlayershotDir()  const { return v1;               }
 int Player::getActiveBulletCount()  const {return activeBulletCount; }
 int Player::getPLHealth()           const { return pl_health;        }
 float Player::getRotation()         const { return pl_rot;           }
+float Player::getAccelerationRate() const { return accelerationRate; }
+float Player::getfriction()         const { return friction;         }
 
 void Player::movement(float deltaTime) {
     // Reset acceleration each frame
