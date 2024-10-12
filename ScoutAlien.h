@@ -20,7 +20,6 @@ private:
     
     // Model
     Vector2 size = {15, 15};
-    int rotation = 0;
     Color color = RED;
 
     // Collision

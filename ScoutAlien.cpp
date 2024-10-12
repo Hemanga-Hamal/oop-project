@@ -6,6 +6,9 @@ ScoutAlien::ScoutAlien(Vector2 pos) : Alien(pos, {0,0}, 1) {
     this->enemy_speed = speed;
     this->enemy_health = health;
     this->alien_size = size;
+    this->alien_collision_box = collisionBox;
+    this->alien_color = color;
+    this->active = true;
     escapeMode = false;
     randomMoveTimer = GetRandomValue(2, 5);  
 }
