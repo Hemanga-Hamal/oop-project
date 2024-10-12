@@ -63,8 +63,8 @@ int main() {
     // Run the tests and store the results
     TestResult results[] = {
         {"File Creation", testCreateFile()},
-        {"File Loading", testLoadHighscore()},
         {"Score Saving", testSaveHighscore()},
+        {"File Loading", testLoadHighscore()},
         {"Display Scores", testDisplayHighscore()}
     };
     int testCount = sizeof(results) / sizeof(results[0]);
