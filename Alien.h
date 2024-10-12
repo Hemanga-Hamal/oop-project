@@ -11,7 +11,7 @@ protected:
     //Model
     Vector2 alien_size = {0, 0};
     int alien_rotation = 0;
-    Color alien_color = RED;
+    Color alien_color = WHITE;
 
     //Collision
     Vector2 alien_collision_box = {0, 0};
