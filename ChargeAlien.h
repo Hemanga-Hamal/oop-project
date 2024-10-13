@@ -35,9 +35,9 @@ public:
     //Setters
     void setEnemyPos(Vector2 newPos) override;
     void setEnemySpeed(Vector2 newSpeed) override;
+    void setEnemyHealth(int newHealth) override;
     void setChargeSize(Vector2 newSize);
     void setCollisionBox(Vector2 newBox) override;
-    void setEnemyHealth(int newHealth) override;
     void setChargeRotation(int newRotation);
     void setBoolActive(bool newActive);
     void setDetectActive(bool newDetect);
