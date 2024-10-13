@@ -121,6 +121,7 @@ int main() {
             timeAlive = 0.0f;
             gameOver = false;
             scoutActive = true;
+            hasntSaved = true;
             DeleteGameState(); // Delete the saved game state when restarting
             continue;
         }
