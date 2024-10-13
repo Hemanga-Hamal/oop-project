@@ -45,7 +45,7 @@ public:
     //Getters
     Vector2 getAlienSize();
     Vector2 getCollisionBox();
-    int getAlienRotattion();
+    int getAlienRotation();
     bool getBoolActive();
     bool getDetectActive();
 
