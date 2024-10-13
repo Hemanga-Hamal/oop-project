@@ -44,7 +44,7 @@ public:
     Vector2 getScoutSize();
     Vector2 getCollisionBox();
     int getScoutRotation();
-    bool getBoolActive();
+    bool getBoolActive() const;
     bool getEscapeMode();
 
     // Collision detection

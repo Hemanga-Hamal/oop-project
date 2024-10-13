@@ -20,8 +20,8 @@ public:
     virtual void setProjSpeed(Vector2) = 0;
     
     // Getters
-    Vector2 getProjSpeed();
-    Vector2 getProjPos();
+    Vector2 getProjSpeed() const;
+    Vector2 getProjPos() const;
     int getProjDamage();
 
     //Collision
