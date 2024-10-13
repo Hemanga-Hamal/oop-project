@@ -59,6 +59,8 @@ public:
     int getPLHealth() const;
     int getActiveBulletCount() const;
     float getRotation() const;
+    float getAccelerationRate() const;
+    float getfriction() const;
 
     // Movement
     void movement(float deltaTime);
