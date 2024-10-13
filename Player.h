@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "PlayerProj.h"
+#include "DynamicPlayerProj.h"
 #include "raylib.h"
 #include <vector>
 
@@ -30,8 +30,8 @@ private:
     float friction = 0.01f;
 
     //Shoot
-    std::vector<PlayerProj> projectiles;
-    int maxProjectiles = 10; //onscreen 
+    std::vector<DynamicPlayerProj*> projectiles;
+    int maxProjectiles = 10; 
     int activeBulletCount; 
     float pl_shootTimeRemaining = 0.0f;
     float pl_shootdelay = 0.3f;
@@ -67,7 +67,7 @@ public:
 
     //Shoot
     void decrementBulletCount();
-    std::vector<PlayerProj>& getProjectiles();
+    std::vector<DynamicPlayerProj*>& getProjectiles();
     void shoot();
 
     //Collision logic
