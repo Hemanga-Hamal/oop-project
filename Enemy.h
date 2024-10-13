@@ -23,9 +23,9 @@ class Enemy{
         void virtual setEnemyHealth(int) = 0;
 
         //Getters
-        Vector2 getEnemyPos() const;
-        Vector2 getEnemySpeed() const;
-        int getEnemyHealth() const;
+        Vector2 getEnemyPos();
+        Vector2 getEnemySpeed();
+        int getEnemyHealth();
 
         //Movement
         void virtual movement(float) = 0;

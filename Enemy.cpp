@@ -8,6 +8,6 @@ Enemy::Enemy(Vector2 pos, Vector2 speed, int health)
 Enemy::~Enemy() {}
 
 //Getters
-Vector2 Enemy::getEnemyPos()   const     {return enemy_pos;      }
-Vector2 Enemy::getEnemySpeed()   const   {return enemy_speed;    }
-int Enemy::getEnemyHealth()     const    {return enemy_health;   }
+Vector2 Enemy::getEnemyPos()        {return enemy_pos;      }
+Vector2 Enemy::getEnemySpeed()      {return enemy_speed;    }
+int Enemy::getEnemyHealth()         {return enemy_health;   }

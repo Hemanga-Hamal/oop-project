@@ -28,7 +28,7 @@ void ScoutAlien::setEscapeMode(bool newMode)            { escapeMode = newMode; 
 Vector2 ScoutAlien::getScoutSize()      { return alien_size; }
 Vector2 ScoutAlien::getCollisionBox()   { return alien_collision_box; }
 int ScoutAlien::getScoutRotation()      { return alien_rotation; }
-bool ScoutAlien::getBoolActive()  const      { return active; }
+bool ScoutAlien::getBoolActive()        { return active; }
 bool ScoutAlien::getEscapeMode()        { return escapeMode; }
 
 // Collision detection
