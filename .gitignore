@@ -6,4 +6,3 @@ Makefile
 resources/LICENSE
 highscores.txt
 test.txt
-player_state.txt
