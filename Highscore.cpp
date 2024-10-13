@@ -37,7 +37,7 @@ void saveHighScore(const Highscore& newScore, const std::string& fileName) {
 }
 
 void displayHighScores(const std::vector<Highscore>& highscores) {
-    for (size_t i = 0; i < highscores.size(); ++i) {
+    for (size_t i = 0; i < 10; ++i) {
         DrawText(TextFormat("%s: %.2f", highscores[i].name.c_str(), highscores[i].score), 10, 150 + 20 * i, 20, DARKGRAY); // Displays the name and score on the screen
     }
 }
@@ -53,7 +53,7 @@ std::string getPlayerName() {
         for (char ch = 'A'; ch <= 'Z'; ++ch) {
             if (IsKeyPressed((int)ch)) {
                 name += ch; // Append uppercase character
-            }
+            } 
         }
         for (char ch = 'a'; ch <= 'z'; ++ch) {
             if (IsKeyPressed((int)ch)) {
@@ -64,7 +64,7 @@ std::string getPlayerName() {
         if (IsKeyPressed(KEY_BACKSPACE)) {
             if (!name.empty()) {
                 name.pop_back(); // Removes last character
-            }
+            } 
         }
         if (firstChar) {
             name.pop_back();
