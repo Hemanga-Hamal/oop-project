@@ -136,7 +136,7 @@ void Player::draw() {
     v3 = Vector2Rotate(Vector2Subtract(v3, center), pl_rot);
     v3 = Vector2Add(v3, center);
 
-    pl_colour = (pl_flashRedTimeRemaining > 0.0f) ? RED : BLUE;
+    pl_colour = (pl_flashRedTimeRemaining > 0) ? RED : BLUE;
     DrawTriangle(v1, v2, v3, pl_colour);
 
     // Draw projectiles

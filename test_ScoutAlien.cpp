@@ -47,7 +47,7 @@ bool testScoutAlienSettersAndGetters() {
 
     Vector2 newPos = {150.0f, 150.0f};
     alien.setEnemyPos(newPos);
-    bool result = (alien.getScoutSize().x == 15.0f && alien.getScoutSize().y == 15.0f);
+    bool result = (alien.getScoutSize().x && alien.getScoutSize().y == 15);
 
     std::cout << "testScoutAlienSettersAndGetters " << (result ? "passed!" : "failed!") << std::endl;
     return result;

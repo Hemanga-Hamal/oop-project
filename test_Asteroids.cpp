@@ -109,7 +109,7 @@ bool testAsteroidsBreakApart() {
     asteroid.breakApart(asteroidsList);
 
     // Expect at least one smaller asteroid to be created
-    return asteroidsList.size() > 0; // Should have created new asteroids
+    return asteroidsList.size() > 0;
 }
 
 int main() {
