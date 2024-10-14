@@ -53,7 +53,7 @@ std::string getPlayerName() {
     while (name.size() < 3) {
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("Enter your name (3 Characters): ", 400 - MeasureText("Enter your name (3 Characters): ", 20) / 2, 300 - 30, 20, DARKGRAY);
+        DrawText("Enter your name (3 Characters): ", 400 - MeasureText("Enter your name (3 Characters): ", 20) / 2, 300 - 30, 20, GRAY);
 
         bool validInput = false;
         for (char ch = 'A'; ch <= 'Z'; ++ch) {
@@ -92,7 +92,7 @@ std::string getPlayerName() {
             firstChar = false;
         }
 
-        DrawText(name.c_str(), 400 - MeasureText(name.c_str(), 20) / 2, 300, 20, DARKGRAY);
+        DrawText(name.c_str(), 400 - MeasureText(name.c_str(), 20) / 2, 300, 20, GRAY);
 
         if (showErrorMessage) {
             DrawText(errorMessage.c_str(), 400 - MeasureText(errorMessage.c_str(), 20) / 2, 350, 20, RED);

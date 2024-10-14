@@ -374,13 +374,21 @@ int main()
                 auto &projectiles = player.getProjectiles();
                 for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
                 {
-                    if (scout.checkCollisionBox((*it)->getProjPos(), {15, 15}))
+                    if (scout.checkCollisionBox((*it)->getProjPos(), scout.getCollisionBox()))
                     {
                         scoutActive = false;
                         scoutRespawnTimer = GetRandomValue(10, 20);
 
                         //save player
+                        int health_pack = player.getPLHealth() + 30;
+                        if (health_pack > 100){
+                            player.setPLHealth(100);
+                        }
+                        else{
+                            player.setPLHealth(health_pack);
+                        };
                         SaveGameState(player, timeAlive);
+
                         break;
                     }
                 }

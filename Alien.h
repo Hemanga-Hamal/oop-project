@@ -9,12 +9,12 @@ protected:
     bool alien_active = false;
 
     //Model
-    Vector2 alien_size = {0, 0};
+    Vector2 alien_size = {15, 15};
     int alien_rotation = 0;
     Color alien_color = WHITE;
 
     //Collision
-    Vector2 alien_collision_box = {0, 0};
+    Vector2 alien_collision_box = {20, 20};
 
 public:
     //Constructor and Destructor

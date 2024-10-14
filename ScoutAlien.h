@@ -23,7 +23,7 @@ private:
     Color color = RED;
 
     // Collision
-    Vector2 collisionBox = {15, 15};
+    Vector2 collisionBox = {35, 35};
 
 public:
     // Constructor and Destructor
