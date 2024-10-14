@@ -46,34 +46,58 @@ void displayHighScores(const std::vector<Highscore>& highscores) {
 
 std::string getPlayerName() {
     std::string name;
+    bool showErrorMessage = false;
     bool firstChar = true;
+    const std::string errorMessage = "Only letters are allowed!";
+
     while (name.size() < 3) {
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("Enter your name (3 Characters): ", 400 - MeasureText("Enter your name (3 Characters): ", 20)/2, 300 - 30, 20, DARKGRAY);
-        // Check for character input
+        DrawText("Enter your name (3 Characters): ", 400 - MeasureText("Enter your name (3 Characters): ", 20) / 2, 300 - 30, 20, DARKGRAY);
+
+        bool validInput = false;
         for (char ch = 'A'; ch <= 'Z'; ++ch) {
             if (IsKeyPressed((int)ch)) {
-                name += ch; // Append uppercase character
-            } 
+                name += ch;
+                validInput = true;
+                showErrorMessage = false;
+            }
         }
         for (char ch = 'a'; ch <= 'z'; ++ch) {
             if (IsKeyPressed((int)ch)) {
-                name += toupper(ch); // Append uppercase character
+                name += toupper(ch);
+                validInput = true;
+                showErrorMessage = false;
             }
         }
-        // Handle backspace
+
         if (IsKeyPressed(KEY_BACKSPACE)) {
             if (!name.empty()) {
-                name.pop_back(); // Removes last character
-            } 
+                name.pop_back();
+                showErrorMessage = false;
+            }
         }
+
+        if (!validInput) {
+            for (int key = KEY_SPACE; key <= KEY_KP_EQUAL; ++key) {
+                if (IsKeyPressed(key) && ((key < 'A' || key > 'Z') && (key < 'a' || key > 'z') && key != KEY_BACKSPACE)) {
+                    showErrorMessage = true;
+                    break;
+                }
+            }
+        }
+
         if (firstChar) {
             name.pop_back();
             firstChar = false;
         }
-        // Draw the current input
-        DrawText(name.c_str(), 400 - MeasureText( name.c_str(), 20), 300, 20, DARKGRAY);
+
+        DrawText(name.c_str(), 400 - MeasureText(name.c_str(), 20) / 2, 300, 20, DARKGRAY);
+
+        if (showErrorMessage) {
+            DrawText(errorMessage.c_str(), 400 - MeasureText(errorMessage.c_str(), 20) / 2, 350, 20, RED);
+        }
+
         EndDrawing();
     }
     return name;
