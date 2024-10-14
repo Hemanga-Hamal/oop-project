@@ -203,11 +203,14 @@ bool HandleMainMenu(int screenWidth, int screenHeight)
             const char *moveInstructions = "Use W,A,S,D keys to move and avoid collisions";
             DrawText(moveInstructions, screenWidth / 2 - MeasureText(moveInstructions, 20) / 2, 200, 20, LIGHTGRAY);
 
-            const char *shootInstructions = "Press SPACE to shoot to Destroy asteroids and Aliens";
+            const char *shootInstructions = "Press SPACE to shoot to destroy Asteroids and Aliens";
             DrawText(shootInstructions, screenWidth / 2 - MeasureText(shootInstructions, 20) / 2, 230, 20, LIGHTGRAY);
 
-            const char *funText = "ESE key to close the game";
-            DrawText(funText, screenWidth / 2 - MeasureText(funText, 20) / 2, 260, 20, LIGHTGRAY);
+            const char *ScoutText = "Killing Alien saves your player progress restores your Health";
+            DrawText(ScoutText, screenWidth / 2 - MeasureText(ScoutText, 20) / 2, 260, 20, LIGHTGRAY);
+
+            const char *CloseText = "ESC key to close the game";
+            DrawText(CloseText, screenWidth / 2 - MeasureText(CloseText, 20) / 2, 290, 20, LIGHTGRAY);
 
             const char *escapeText = "Press Q to return to menu";
             DrawText(escapeText, screenWidth / 2 - MeasureText(escapeText, 20) / 2, screenHeight / 2 + 40, 20, LIGHTGRAY);
@@ -371,10 +374,13 @@ int main()
                 auto &projectiles = player.getProjectiles();
                 for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
                 {
-                    if (scout.checkCollisionBox((*it)->getProjPos(), {10, 10}))
+                    if (scout.checkCollisionBox((*it)->getProjPos(), {15, 15}))
                     {
                         scoutActive = false;
                         scoutRespawnTimer = GetRandomValue(10, 20);
+
+                        //save player
+                        SaveGameState(player, timeAlive);
                         break;
                     }
                 }
@@ -420,14 +426,14 @@ int main()
                 SpawnAsteroids(asteroids, player, 5);
             }
 
-            // Save game state periodically (e.g., every 5 seconds)
-            static float saveTimer = 0.0f;
-            saveTimer += deltaTime;
-            if (saveTimer >= 5.0f)
-            {
-                SaveGameState(player, timeAlive);
-                saveTimer = 0.0f;
-            }
+            // // Save game state periodically (e.g., every 5 seconds)
+            // static float saveTimer = 0.0f;
+            // saveTimer += deltaTime;
+            // if (saveTimer >= 5.0f)
+            // {
+            //     SaveGameState(player, timeAlive);
+            //     saveTimer = 0.0f;
+            // }
 
             // Drawing
             BeginDrawing();
