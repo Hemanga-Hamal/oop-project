@@ -1,5 +1,6 @@
 #include "ChargeAlien.h"
 #include "raymath.h"
+#include <cstdlib>
 
 //Constructor and Destructor
 ChargeAlien::ChargeAlien(Vector2 pos) : Alien(pos, {0,0}, 1){
@@ -42,6 +43,15 @@ void ChargeAlien::movement(float deltaTime) {
     movement(deltaTime, defaultPlayerPos);
 }
 
+//Setting Target
+void ChargeAlien::setSpeedTowards(Vector2 target, float baseSpeed) {
+    if (!detect) return;
+
+    Vector2 direction = Vector2Subtract(target, enemy_pos);
+    direction = Vector2Normalize(direction);
+    setEnemySpeed(Vector2Scale(direction, chargeSpeed));
+}
+
 //Detection Logic
 
 
@@ -61,4 +71,25 @@ void ChargeAlien::update(float deltaTime, Vector2 playerPos){
     draw();
 }
 
-
+void ChargeAlien::spawnAtEdge() {
+    int edgeCase = std::rand() % 4;
+    switch (edgeCase) {
+        case 0:
+            enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
+            enemy_pos.y = 0; // Top
+            break;
+        case 1:
+            enemy_pos.x = static_cast<float>(std::rand() % GetScreenWidth());
+            enemy_pos.y = GetScreenHeight(); // Bottom
+            break;
+        case 2:
+            enemy_pos.x = 0; // Left
+            enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
+            break;
+        case 3:
+            enemy_pos.x = GetScreenWidth(); // Right
+            enemy_pos.y = static_cast<float>(std::rand() % GetScreenHeight());
+            break;
+    }
+    setDetectActive(true);
+}

@@ -55,11 +55,13 @@ public:
     //Movement
     void movement(float deltaTime) override;
     void movement(float deltaTime, Vector2 playerPos);
+    void setSpeedTowards(Vector2 target, float baseSpeed);
 
     //Update and Rendering
     void draw() override;
     void update(float deltaTime) override;
     void update(float deltaTime, Vector2 playerPos);
+    void spawnAtEdge();
 };
 
 #endif
