@@ -71,7 +71,7 @@ void ChargeAlien::update(float deltaTime, Vector2 playerPos){
     draw();
 }
 
-void ChargeAlien::spawnAtEdge() {
+void ChargeAlien::spawnAtEdge(float deltaTime, Vector2 playerPos) {
     int edgeCase = std::rand() % 4;
     switch (edgeCase) {
         case 0:
@@ -92,4 +92,24 @@ void ChargeAlien::spawnAtEdge() {
             break;
     }
     setDetectActive(true);
+    setBoolActive(true);
+    
+        
+        
+        float randomAngle = GetRandomValue(0, 360) * DEG2RAD;
+        Vector2 randomDir = { cosf(randomAngle), sinf(randomAngle) };
+        enemy_speed = Vector2Scale(Vector2Normalize(randomDir), 100.0f);
+            
+        
+
+        // Move the alien in the current direction
+        enemy_pos.x += enemy_speed.x * deltaTime;
+        enemy_pos.y += enemy_speed.y * deltaTime;
+
+        // Wrap the alien around the screen
+        if (enemy_pos.x < 0) enemy_pos.x = GetScreenWidth();
+        if (enemy_pos.x > GetScreenWidth()) enemy_pos.x = 0;
+        if (enemy_pos.y < 0) enemy_pos.y = GetScreenHeight();
+        if (enemy_pos.y > GetScreenHeight()) enemy_pos.y = 0;
+
 }
