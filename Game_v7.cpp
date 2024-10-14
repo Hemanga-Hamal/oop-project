@@ -79,7 +79,8 @@ void SpawnAsteroids(std::vector<std::unique_ptr<Asteroids>> &asteroids, const Pl
     }
 }
 
-struct MenuAsteroid {
+struct MenuAsteroid
+{
     Vector2 position;
     Vector2 velocity;
     float radius;
@@ -121,12 +122,11 @@ bool HandleMainMenu(int screenWidth, int screenHeight)
     std::uniform_real_distribution<> velDist(-100, 100);
     std::uniform_real_distribution<> radiusDist(5, 20);
 
-    for (int i = 0; i < 20; ++i) {
-        asteroids.push_back({
-            {static_cast<float>(xDist(gen)), static_cast<float>(yDist(gen))},
-            {static_cast<float>(velDist(gen)), static_cast<float>(velDist(gen))},
-            static_cast<float>(radiusDist(gen))
-        });
+    for (int i = 0; i < 20; ++i)
+    {
+        asteroids.push_back({{static_cast<float>(xDist(gen)), static_cast<float>(yDist(gen))},
+                             {static_cast<float>(velDist(gen)), static_cast<float>(velDist(gen))},
+                             static_cast<float>(radiusDist(gen))});
     }
 
     while (!WindowShouldClose())
@@ -134,29 +134,35 @@ bool HandleMainMenu(int screenWidth, int screenHeight)
         float deltaTime = GetFrameTime();
 
         // Update asteroid positions
-        for (auto& asteroid : asteroids) {
+        for (auto &asteroid : asteroids)
+        {
             asteroid.position.x += asteroid.velocity.x * deltaTime;
             asteroid.position.y += asteroid.velocity.y * deltaTime;
 
             // Wrap around screen edges
-            if (asteroid.position.x < -asteroid.radius) asteroid.position.x = screenWidth + asteroid.radius;
-            if (asteroid.position.x > screenWidth + asteroid.radius) asteroid.position.x = -asteroid.radius;
-            if (asteroid.position.y < -asteroid.radius) asteroid.position.y = screenHeight + asteroid.radius;
-            if (asteroid.position.y > screenHeight + asteroid.radius) asteroid.position.y = -asteroid.radius;
+            if (asteroid.position.x < -asteroid.radius)
+                asteroid.position.x = screenWidth + asteroid.radius;
+            if (asteroid.position.x > screenWidth + asteroid.radius)
+                asteroid.position.x = -asteroid.radius;
+            if (asteroid.position.y < -asteroid.radius)
+                asteroid.position.y = screenHeight + asteroid.radius;
+            if (asteroid.position.y > screenHeight + asteroid.radius)
+                asteroid.position.y = -asteroid.radius;
         }
 
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
         // Draw background asteroids
-        for (const auto& asteroid : asteroids) {
-            DrawCircleV(asteroid.position, asteroid.radius, LIGHTGRAY);
+        for (const auto &asteroid : asteroids)
+        {
+            DrawCircleV(asteroid.position, asteroid.radius, GRAY);
         }
 
         if (!showInstructions)
         {
             const char *title = "ASTEROIDS ON A BUDGET";
-            DrawText(title, screenWidth / 2 - MeasureText(title, 50) / 2, 100, 50, DARKGRAY);
+            DrawText(title, screenWidth / 2 - MeasureText(title, 50) / 2, 100, 50, LIGHTGRAY);
 
             // Draw buttons
             DrawRectangleRec(playButton, LIGHTGRAY);
@@ -192,19 +198,19 @@ bool HandleMainMenu(int screenWidth, int screenHeight)
         {
             // Display instructions
             const char *instructionsTitle = "INSTRUCTIONS";
-            DrawText(instructionsTitle, screenWidth / 2 - MeasureText(instructionsTitle, 40) / 2, 100, 40, DARKGRAY);
+            DrawText(instructionsTitle, screenWidth / 2 - MeasureText(instructionsTitle, 40) / 2, 100, 40, LIGHTGRAY);
 
             const char *moveInstructions = "Use W,A,S,D keys to move and avoid collisions";
-            DrawText(moveInstructions, screenWidth / 2 - MeasureText(moveInstructions, 20) / 2, 200, 20, DARKGRAY);
+            DrawText(moveInstructions, screenWidth / 2 - MeasureText(moveInstructions, 20) / 2, 200, 20, LIGHTGRAY);
 
             const char *shootInstructions = "Press SPACE to shoot to Destroy asteroids and Aliens";
-            DrawText(shootInstructions, screenWidth / 2 - MeasureText(shootInstructions, 20) / 2, 230, 20, DARKGRAY);
+            DrawText(shootInstructions, screenWidth / 2 - MeasureText(shootInstructions, 20) / 2, 230, 20, LIGHTGRAY);
 
             const char *funText = "ESE key to close the game";
-            DrawText(funText, screenWidth / 2 - MeasureText(funText, 20) / 2, 260, 20, DARKGRAY);
+            DrawText(funText, screenWidth / 2 - MeasureText(funText, 20) / 2, 260, 20, LIGHTGRAY);
 
             const char *escapeText = "Press Q to return to menu";
-            DrawText(escapeText, screenWidth / 2 - MeasureText(escapeText, 20) / 2, screenHeight - 50, 20, DARKGRAY);
+            DrawText(escapeText, screenWidth / 2 - MeasureText(escapeText, 20) / 2, screenHeight / 2 + 40, 20, LIGHTGRAY);
 
             if (IsKeyPressed(KEY_Q))
             {
@@ -425,7 +431,7 @@ int main()
 
             // Drawing
             BeginDrawing();
-            ClearBackground(RAYWHITE);
+            ClearBackground(BLACK);
 
             player.draw();
             for (const auto &asteroid : asteroids)
@@ -438,10 +444,10 @@ int main()
             }
 
             const char *healthText = TextFormat("Player Health: %i", player.getPLHealth());
-            DrawText(healthText, screenWidth / 2 - MeasureText(healthText, 20) / 2, 10, 20, DARKGRAY);
+            DrawText(healthText, screenWidth / 2 - MeasureText(healthText, 20) / 2, 10, 20, LIGHTGRAY);
 
             const char *timeText = TextFormat("Time Alive: %.1f seconds", timeAlive);
-            DrawText(timeText, screenWidth / 2 - MeasureText(timeText, 20) / 2, 40, 20, DARKGRAY);
+            DrawText(timeText, screenWidth / 2 - MeasureText(timeText, 20) / 2, 40, 20, LIGHTGRAY);
 
             EndDrawing();
         }
@@ -450,40 +456,92 @@ int main()
             // Handle game over screen
             if (gameOver)
             {
+                // Initialize background asteroids (do this once, outside the loop)
+                static std::vector<MenuAsteroid> asteroids;
+                static bool asteroidsInitialized = false;
+
+                if (!asteroidsInitialized)
+                {
+                    std::random_device rd;
+                    std::mt19937 gen(rd());
+                    std::uniform_real_distribution<> xDist(0, screenWidth);
+                    std::uniform_real_distribution<> yDist(0, screenHeight);
+                    std::uniform_real_distribution<> velDist(-50, 50);
+                    std::uniform_real_distribution<> radiusDist(2, 10);
+
+                    for (int i = 0; i < 20; ++i)
+                    {
+                        asteroids.push_back({{static_cast<float>(xDist(gen)), static_cast<float>(yDist(gen))},
+                                             {static_cast<float>(velDist(gen)), static_cast<float>(velDist(gen))},
+                                             static_cast<float>(radiusDist(gen))});
+                    }
+                    asteroidsInitialized = true;
+                }
+
+                // Update asteroid positions
+                float deltaTime = GetFrameTime();
+                for (auto &asteroid : asteroids)
+                {
+                    asteroid.position.x += asteroid.velocity.x * deltaTime;
+                    asteroid.position.y += asteroid.velocity.y * deltaTime;
+
+                    // Wrap around screen edges
+                    if (asteroid.position.x < -asteroid.radius)
+                        asteroid.position.x = screenWidth + asteroid.radius;
+                    if (asteroid.position.x > screenWidth + asteroid.radius)
+                        asteroid.position.x = -asteroid.radius;
+                    if (asteroid.position.y < -asteroid.radius)
+                        asteroid.position.y = screenHeight + asteroid.radius;
+                    if (asteroid.position.y > screenHeight + asteroid.radius)
+                        asteroid.position.y = -asteroid.radius;
+                }
+
                 if (showHighScoreMenu)
                 {
                     BeginDrawing();
-                    ClearBackground(RAYWHITE);
+                    ClearBackground(BLACK);
+
+                    // Draw background asteroids
+                    for (const auto &asteroid : asteroids)
+                    {
+                        DrawCircleV(asteroid.position, asteroid.radius, GRAY);
+                    }
 
                     const char *highScoresTitle = "HIGH SCORES";
-                    DrawText(highScoresTitle, screenWidth / 2 - MeasureText(highScoresTitle, 40) / 2, screenHeight / 2 - 50, 40, DARKGRAY);
+                    DrawText(highScoresTitle, screenWidth / 2 - MeasureText(highScoresTitle, 40) / 2, screenHeight / 5, 40, LIGHTGRAY);
 
                     displayHighScores(highscores);
 
                     const char *backText = "Press [T] to go back to Game Over screen";
-                    DrawText(backText, screenWidth / 2 - MeasureText(backText, 20) / 2, screenHeight / 2 + 100, 20, DARKGRAY);
+                    DrawText(backText, screenWidth / 2 - MeasureText(backText, 20) / 2, screenHeight * 0.8, 20, LIGHTGRAY);
 
                     EndDrawing();
                 }
                 else
                 {
                     BeginDrawing();
-                    ClearBackground(RAYWHITE);
+                    ClearBackground(BLACK);
+
+                    // Draw background asteroids
+                    for (const auto &asteroid : asteroids)
+                    {
+                        DrawCircleV(asteroid.position, asteroid.radius, GRAY);
+                    }
 
                     const char *gameOverText = "GAME OVER";
                     DrawText(gameOverText, screenWidth / 2 - MeasureText(gameOverText, 40) / 2, screenHeight / 2 - 50, 40, RED);
 
                     const char *finalTimeText = TextFormat("Time Alive: %.2f seconds", timeAlive);
-                    DrawText(finalTimeText, screenWidth / 2 - MeasureText(finalTimeText, 20) / 2, screenHeight / 2, 20, DARKGRAY);
+                    DrawText(finalTimeText, screenWidth / 2 - MeasureText(finalTimeText, 20) / 2, screenHeight / 2, 20, LIGHTGRAY);
 
                     const char *restartText = "Press [R] to restart, or [ESC] to quit";
-                    DrawText(restartText, screenWidth / 2 - MeasureText(restartText, 20) / 2, screenHeight / 2 + 40, 20, DARKGRAY);
+                    DrawText(restartText, screenWidth / 2 - MeasureText(restartText, 20) / 2, screenHeight / 2 + 40, 20, LIGHTGRAY);
 
                     const char *saveScoreText = "Press [T] to save your highscore";
-                    DrawText(saveScoreText, screenWidth / 2 - MeasureText(saveScoreText, 20) / 2, screenHeight / 2 + 80, 20, DARKGRAY);
+                    DrawText(saveScoreText, screenWidth / 2 - MeasureText(saveScoreText, 20) / 2, screenHeight / 2 + 80, 20, LIGHTGRAY);
 
                     const char *fpsText = TextFormat("FPS: %i", GetFPS());
-                    DrawText(fpsText, screenWidth / 2 - MeasureText(fpsText, 20) / 2, screenHeight - 30, 20, DARKGRAY);
+                    DrawText(fpsText, screenWidth / 2 - MeasureText(fpsText, 20) / 2, screenHeight - 30, 20, LIGHTGRAY);
 
                     EndDrawing();
                 }

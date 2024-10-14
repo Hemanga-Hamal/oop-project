@@ -37,8 +37,10 @@ void saveHighScore(const Highscore& newScore, const std::string& fileName) {
 }
 
 void displayHighScores(const std::vector<Highscore>& highscores) {
-    for (size_t i = 0; i < 10; ++i) {
-        DrawText(TextFormat("%s: %.2f", highscores[i].name.c_str(), highscores[i].score), 10, 150 + 20 * i, 20, DARKGRAY); // Displays the name and score on the screen
+    for (size_t i = 0; i < std::min(highscores.size(), static_cast<size_t>(10)); ++i) {
+        std::string text = TextFormat("%s: %.1f", highscores[i].name.c_str(), highscores[i].score);
+        int textWidth = MeasureText(text.c_str(), 20);
+        DrawText(text.c_str(), 400 - textWidth / 2, 200 + 20 * i, 20, DARKGRAY);
     }
 }
 
@@ -47,8 +49,8 @@ std::string getPlayerName() {
     bool firstChar = true;
     while (name.size() < 3) {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Enter your name (3 Characters): ", 250, 360, 20, DARKGRAY);
+        ClearBackground(BLACK);
+        DrawText("Enter your name (3 Characters): ", 400 - MeasureText("Enter your name (3 Characters): ", 20)/2, 300 - 30, 20, DARKGRAY);
         // Check for character input
         for (char ch = 'A'; ch <= 'Z'; ++ch) {
             if (IsKeyPressed((int)ch)) {
@@ -71,7 +73,7 @@ std::string getPlayerName() {
             firstChar = false;
         }
         // Draw the current input
-        DrawText(name.c_str(), 250, 400, 20, DARKGRAY);
+        DrawText(name.c_str(), 400 - MeasureText( name.c_str(), 20), 300, 20, DARKGRAY);
         EndDrawing();
     }
     return name;
