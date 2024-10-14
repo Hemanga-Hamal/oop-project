@@ -122,7 +122,7 @@ int main() {
             gameOver = false;
             scoutActive = true;
             hasntSaved = true;
-            DeleteGameState(); // Delete the saved game state when restarting
+            DeleteGameState();
             continue;
         }
 
@@ -148,7 +148,7 @@ int main() {
 
             if (player.getPLHealth() <= 0) {
                 gameOver = true;
-                DeleteGameState(); // Delete the saved game state when game over
+                DeleteGameState();
             }
 
             Vector2 playerPos = player.getPLPos();
@@ -190,7 +190,7 @@ int main() {
                 scout.update(deltaTime, playerPos);
                 auto &projectiles = player.getProjectiles();
                 for (auto it = projectiles.begin(); it != projectiles.end(); ++it) {
-                    if (scout.checkCollisionBox((*it)->getProjPos(), {10, 10})) { // Dereference with (*it)
+                    if (scout.checkCollisionBox((*it)->getProjPos(), {10, 10})) {
                         scoutActive = false;
                         scoutRespawnTimer = GetRandomValue(10, 20);
                         break;
@@ -250,16 +250,16 @@ int main() {
             }
 
             DrawText(TextFormat("Player Health: %i", player.getPLHealth()), 10, 10, 20, DARKGRAY);
-            DrawText(TextFormat("Active Bullets: %d", player.getActiveBulletCount()), 10, 30, 20, DARKGRAY);
-            DrawText(TextFormat("Active Asteroids: %d", activeAsteroids), 10, 50, 20, DARKGRAY);
+            // DrawText(TextFormat("Active Bullets: %d", player.getActiveBulletCount()), 10, 30, 20, DARKGRAY);
+            // DrawText(TextFormat("Active Asteroids: %d", activeAsteroids), 10, 50, 20, DARKGRAY);
             DrawText(TextFormat("Time Alive: %.1f seconds", timeAlive), 10, 70, 20, DARKGRAY);
             
-            if (scoutActive) {
-                const char* modeText = scout.getEscapeMode() ? "Scout Mode: Escape" : "Scout Mode: Exploration";
-                DrawText(modeText, 10, 90, 20, BLUE);
-            } else {
-                DrawText(TextFormat("Scout Respawn in: %.1f seconds", scoutRespawnTimer), 10, 90, 20, RED);
-            }
+            // if (scoutActive) {
+            //     const char* modeText = scout.getEscapeMode() ? "Scout Mode: Escape" : "Scout Mode: Exploration";
+            //     DrawText(modeText, 10, 90, 20, BLUE);
+            // } else {
+            //     DrawText(TextFormat("Scout Respawn in: %.1f seconds", scoutRespawnTimer), 10, 90, 20, RED);
+            // }
 
             EndDrawing();
         } else {
