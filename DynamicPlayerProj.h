@@ -5,7 +5,7 @@
 
 class DynamicPlayerProj {
 private:
-    PlayerProj* proj;  // Pointer to the PlayerProj object
+    PlayerProj* proj; 
 
 public:
     // Constructor
