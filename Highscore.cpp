@@ -40,7 +40,7 @@ void displayHighScores(const std::vector<Highscore>& highscores) {
     for (size_t i = 0; i < std::min(highscores.size(), static_cast<size_t>(10)); ++i) {
         std::string text = TextFormat("%s: %.1f", highscores[i].name.c_str(), highscores[i].score);
         int textWidth = MeasureText(text.c_str(), 20);
-        DrawText(text.c_str(), 400 - textWidth / 2, 200 + 20 * i, 20, DARKGRAY);
+        DrawText(text.c_str(), 400 - textWidth / 2, 200 + 20 * i, 20, GRAY);
     }
 }
 
