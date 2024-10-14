@@ -14,17 +14,16 @@ private:
 
     // Movement
     float escapeSpeed = 300.0f;
-    float detectionRange = 200.0f;
+    float detectionRange = 150.0f;
     float randomMoveTimer;
     bool escapeMode = false;
     
     // Model
     Vector2 size = {15, 15};
-    int rotation = 0;
     Color color = RED;
 
     // Collision
-    Vector2 collisionBox = {15, 15};
+    Vector2 collisionBox = {35, 35};
 
 public:
     // Constructor and Destructor

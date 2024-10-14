@@ -1,29 +1,36 @@
 #include "Player.h"
-#include "PlayerProj.h"
+#include "DynamicPlayerProj.h"
 #include "raymath.h"
 #include <cmath>
 
 Player::Player(Vector2 pos, int health) : pl_pos(pos), pl_health(health), activeBulletCount(0) {}
 
-Player::~Player() {}
+Player::~Player() {
+    // Clean up dynamically allocated projectiles
+    for (DynamicPlayerProj* proj : projectiles) {
+        delete proj;
+    }
+}
 
 // Setters
-void Player::setPLHealth(int health)            { pl_health = health;   }
-void Player::setPLSpeed(const Vector2& speed)   { pl_speed = speed;     }
-void Player::setRotation(float rotation)        { pl_rot = rotation;    }
+void Player::setPLHealth(int health) { pl_health = health; }
+void Player::setPLSpeed(const Vector2& speed) { pl_speed = speed; }
+void Player::setRotation(float rotation) { pl_rot = rotation; }
 
 // Getters
-Vector2 Player::getPLPos()          const { return pl_pos;           }
-Vector2 Player::getPLSpeed()        const { return pl_speed;         }
-Vector2 Player::getBoundingBox()    const { return pl_BoundingBox;   }
-Vector2 Player::getPlayershotDir()  const { return v1;               }
-int Player::getActiveBulletCount()  const {return activeBulletCount; }
-int Player::getPLHealth()           const { return pl_health;        }
-float Player::getRotation()         const { return pl_rot;           }
+Vector2 Player::getPLPos() const { return pl_pos; }
+Vector2 Player::getPLSpeed() const { return pl_speed; }
+Vector2 Player::getBoundingBox() const { return pl_BoundingBox; }
+Vector2 Player::getPlayershotDir() const { return v1; }
+int Player::getActiveBulletCount() const { return activeBulletCount; }
+int Player::getPLHealth() const { return pl_health; }
+float Player::getRotation() const { return pl_rot; }
+float Player::getAccelerationRate() const { return accelerationRate; }
+float Player::getfriction() const { return friction; }
 
 void Player::movement(float deltaTime) {
     // Reset acceleration each frame
-    pl_acceleration = {0.0f, 0.0f};
+    pl_acceleration = { 0.0f, 0.0f };
 
     // Apply acceleration based on key presses
     if (IsKeyDown(KEY_W)) pl_acceleration.y -= accelerationRate;
@@ -60,8 +67,8 @@ void Player::movement(float deltaTime) {
     if (pl_pos.y > screenHeight) pl_pos.y = 0;
 }
 
-//shoot
-std::vector<PlayerProj>& Player::getProjectiles() { return projectiles;}
+// Get projectiles
+std::vector<DynamicPlayerProj*>& Player::getProjectiles() { return projectiles; }
 
 void Player::decrementBulletCount() {
     if (activeBulletCount > 0) {
@@ -73,17 +80,16 @@ void Player::decrementBulletCount() {
 void Player::shoot() {
     if (pl_shootTimeRemaining <= 0.0f) {
         pl_shootTimeRemaining = pl_shootdelay;
-        if (projectiles.size() < static_cast<std::vector<PlayerProj>::size_type>(maxProjectiles)) {
+        if (projectiles.size() < static_cast<std::vector<DynamicPlayerProj*>::size_type>(maxProjectiles)) {
             Vector2 direction = { cosf(pl_rot - (float)PI / 2.0f), sinf(pl_rot - (float)PI / 2.0f) };
-            PlayerProj newProj(pl_pos, direction);
+            DynamicPlayerProj* newProj = new DynamicPlayerProj(pl_pos, direction); // Create new projectile dynamically
             projectiles.push_back(newProj);
             activeBulletCount++;
         }
     }
 }
 
-
-//Collision logic
+// Collision logic
 bool Player::checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding) {
     Vector2 relativePos = Vector2Subtract(enemyPos, pl_pos);
     Vector2 rotatedPos = Vector2Rotate(relativePos, -pl_rot);
@@ -92,7 +98,7 @@ bool Player::checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding) {
     float normY = rotatedPos.y / pl_BoundingBox.y;
     bool insideEllipse = (normX * normX + normY * normY <= 1.0f);
     
-    if (insideEllipse)  {return true;}
+    if (insideEllipse) { return true; }
 
     float angle = atan2f(rotatedPos.y, rotatedPos.x);
     float ellipseX = pl_BoundingBox.x * cosf(angle);
@@ -101,7 +107,7 @@ bool Player::checkColEnemy(Vector2 enemyPos, Vector2 enemyBounding) {
     float dist_y = rotatedPos.y - ellipseY;
     float distance = sqrtf(dist_x * dist_x + dist_y * dist_y);
 
-    return distance < enemyBounding.x|| distance < enemyBounding.y;
+    return distance < enemyBounding.x || distance < enemyBounding.y;
 }
 
 // Rendering
@@ -118,9 +124,9 @@ void Player::takeDamage(int damage) {
 void Player::draw() {
     // Draw the player triangle
     float size = 23.0f;
-    v1 = { pl_pos.x, pl_pos.y - size};
-    v2 = { pl_pos.x - size / 2, pl_pos.y + size / 2 +2};
-    v3 = { pl_pos.x + size / 2, pl_pos.y + size / 2 +2};
+    v1 = { pl_pos.x, pl_pos.y - size };
+    v2 = { pl_pos.x - size / 2, pl_pos.y + size / 2 + 2 };
+    v3 = { pl_pos.x + size / 2, pl_pos.y + size / 2 + 2 };
     Vector2 center = pl_pos;
 
     v1 = Vector2Rotate(Vector2Subtract(v1, center), pl_rot);
@@ -130,36 +136,18 @@ void Player::draw() {
     v3 = Vector2Rotate(Vector2Subtract(v3, center), pl_rot);
     v3 = Vector2Add(v3, center);
 
-    pl_colour = (pl_flashRedTimeRemaining > 0.0f) ? RED : BLUE;
+    pl_colour = (pl_flashRedTimeRemaining > 0) ? RED : BLUE;
     DrawTriangle(v1, v2, v3, pl_colour);
 
     // Draw projectiles
-    for (PlayerProj& proj : projectiles) {
-        proj.draw();
-    }
-
-    //bouding oval testing
-    if (false){
-    float halfWidth = 10.0f;
-    float halfHeight = 20.0f;
-    int numSegments = 64;
-    for (int i = 0; i < numSegments; i++) {
-        float angle1 = (float)i / numSegments * 2.0f * PI;
-        float angle2 = (float)(i + 1) / numSegments * 2.0f * PI;
-        Vector2 p1 = { pl_pos.x + halfWidth * cosf(angle1), pl_pos.y + halfHeight * sinf(angle1) };
-        Vector2 p2 = { pl_pos.x + halfWidth * cosf(angle2), pl_pos.y + halfHeight * sinf(angle2) };
-        p1 = Vector2Rotate(Vector2Subtract(p1, center), pl_rot);
-        p1 = Vector2Add(p1, center);
-        p2 = Vector2Rotate(Vector2Subtract(p2, center), pl_rot);
-        p2 = Vector2Add(p2, center);
-        DrawLineV(p1, p2, DARKGRAY);
-    }
+    for (DynamicPlayerProj* proj : projectiles) {
+        proj->draw();  // Call draw on each dynamically allocated projectile
     }
 }
 
 // Update
 void Player::update(float deltaTime) {
-    //movement
+    // Movement
     movement(deltaTime);
 
     // Call the shoot method when the shoot key is pressed
@@ -167,12 +155,12 @@ void Player::update(float deltaTime) {
         shoot();
     }
 
-    //model Rotation
+    // Model rotation
     Vector2 mousePos = GetMousePosition();
     updateRotation(mousePos);
 
-    //Take damage colour swap
-     if (pl_flashRedTimeRemaining > 0.0f) {
+    // Take damage color swap
+    if (pl_flashRedTimeRemaining > 0.0f) {
         pl_flashRedTimeRemaining -= deltaTime;
     }
 
@@ -183,12 +171,13 @@ void Player::update(float deltaTime) {
 
     // Update projectiles and remove inactive ones
     for (auto it = projectiles.begin(); it != projectiles.end(); ) {
-    it->update(deltaTime);
-    if (!it->isActive()) {
-        it = projectiles.erase(it);
-        activeBulletCount--;
-    } else {
-        ++it;
+        (*it)->update(deltaTime);  // Call update on each projectile
+        if (!(*it)->isActive()) {
+            delete *it;  // Delete inactive projectile
+            it = projectiles.erase(it);  // Erase pointer from vector
+            activeBulletCount--;
+        } else {
+            ++it;
+        }
     }
-}
 }

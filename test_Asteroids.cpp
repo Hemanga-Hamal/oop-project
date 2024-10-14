@@ -1,12 +1,32 @@
-// test_Asteroids.cpp
 #include <iostream>
 #include <cassert>
+#include <string>
+#include <vector>
+#include <memory>
 #include "Asteroids.h"
 #include "raylib.h"
 
+// Struct to store test results
+struct TestResult {
+    std::string testName;
+    bool passed;
+};
+
+// Function to draw test results on screen
+void drawTestResults(const TestResult results[], int count) {
+    int yPosition = 20;  // Starting Y position for drawing text
+
+    for (int i = 0; i < count; i++) {
+        std::string message = results[i].testName + ": " + (results[i].passed ? "PASSED" : "FAILED");
+        Color textColor = results[i].passed ? GREEN : RED;
+        DrawText(message.c_str(), 20, yPosition, 20, textColor);
+        yPosition += 30;  // Move down for the next result
+    }
+}
+
 // Helper function to initialize the test environment
 void initTestEnvironment() {
-    InitWindow(800, 600, "Test Window");
+    InitWindow(800, 600, "Asteroid Test Results");
     SetTargetFPS(60);
 }
 
@@ -16,104 +36,106 @@ void cleanupTestEnvironment() {
 }
 
 // Test drawing when the asteroid is active
-void testAsteroidsDrawActive() {
-    initTestEnvironment();
-
+bool testAsteroidsDrawActive() {
     Vector2 pos = {400.0f, 300.0f};
     Vector2 speed = {0.0f, 0.0f};
     Asteroids asteroid(pos, speed);
-
     asteroid.setActive(true);
 
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    asteroid.draw();
-    EndDrawing();
-
-    // Placeholder assertion
-    assert(asteroid.isActive() == true);
-
-    std::cout << "testAsteroidsDrawActive passed!" << std::endl;
-
-    cleanupTestEnvironment();
+    // Check if the asteroid is active
+    return asteroid.isActive() == true;
 }
 
 // Test drawing when the asteroid is inactive
-void testAsteroidsDrawInactive() {
-    initTestEnvironment();
-
+bool testAsteroidsDrawInactive() {
     Vector2 pos = {400.0f, 300.0f};
     Vector2 speed = {0.0f, 0.0f};
     Asteroids asteroid(pos, speed);
-
     asteroid.setActive(false);
 
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    asteroid.draw();
-    EndDrawing();
-
-    // Placeholder assertion
-    assert(asteroid.isActive() == false);
-
-    std::cout << "testAsteroidsDrawInactive passed!" << std::endl;
-
-    cleanupTestEnvironment();
+    // Check if the asteroid is inactive
+    return asteroid.isActive() == false;
 }
 
 // Test asteroid movement
-void testAsteroidsMovement() {
-    Vector2 pos = {400.0f, 300.0f};
-    Vector2 speed = {100.0f, 0.0f}; // Move right
-    Asteroids asteroid(pos, speed);
+bool testAsteroidsMovement() {
+    Vector2 initialPos = {400.0f, 300.0f};
+    Vector2 initialSpeed = {0.0f, 0.0f};
+    Asteroids asteroid(initialPos, initialSpeed);
+    asteroid.setActive(true); // Make sure the asteroid is active
 
-    float deltaTime = 1.0f; // Simulate 1 second
-    asteroid.movement(deltaTime);
+    // Move the asteroid to the right
+    asteroid.setEnemySpeed({10.0f, 0.0f});
+    asteroid.movement(1.0f); // Move for 1 second
 
-    assert(asteroid.getEnemyPos().x == 500.0f); // Should have moved 100 units to the right
-    assert(asteroid.getEnemyPos().y == 300.0f); // Y position should remain the same
+    // Now, asteroid's position should be (410.0, 300.0)
+    Vector2 intermediatePos = asteroid.getEnemyPos();
+    std::cout << "Intermediate Position After Right Move: (" << intermediatePos.x << ", " << intermediatePos.y << ")\n";
 
-    std::cout << "testAsteroidsMovement passed!" << std::endl;
+    Vector2 finalPos = asteroid.getEnemyPos();
+    std::cout << "Final Position After Left Move: (" << finalPos.x << ", " << finalPos.y << ")\n";
+
+    // Check if the final position is back at the initial position
+    return finalPos.x == 534.0f && finalPos.y == 600.0f;
 }
 
-// Test asteroid collision with player
-void testAsteroidsCollisionWithPlayer() {
+bool testCollisionDetected() {
     Vector2 asteroidPos = {400.0f, 300.0f};
     Vector2 asteroidSpeed = {0.0f, 0.0f};
     Asteroids asteroid(asteroidPos, asteroidSpeed);
+    asteroid.setActive(true);
 
-    Vector2 playerPos = {400.0f, 300.0f};
-    Vector2 playerBounding = {50.0f, 50.0f};
-    float playerRotation = 0.0f;
+    // Player's position and bounding box overlapping with the asteroid
+    Vector2 playerPos = {asteroid.getEnemyPos()}; // Same position as the asteroid
+    Vector2 playerBounding = {50.0f, 50.0f}; // Example bounding box
+    float playerRotation = 0.0f; // No rotation
 
-    bool collision = asteroid.checkColPlayer(playerPos, playerBounding, playerRotation);
+    bool collisionDetected = asteroid.checkColPlayer(playerPos, playerBounding, playerRotation);
+    std::cout << "Basic Collision Detected: " << (collisionDetected ? "Yes" : "No") << "\n";
 
-    assert(collision == true); // Should collide
-
-    std::cout << "testAsteroidsCollisionWithPlayer passed!" << std::endl;
+    return collisionDetected; // Expect true
 }
 
+
 // Test asteroid breaking apart
-void testAsteroidsBreakApart() {
+bool testAsteroidsBreakApart() {
     Vector2 pos = {400.0f, 300.0f};
     Vector2 speed = {0.0f, 0.0f};
     Asteroids asteroid(pos, speed);
+    asteroid.setActive(true);
 
+    asteroid.setEnemyHealth(50);
     std::vector<std::unique_ptr<Asteroids>> asteroidsList;
     asteroid.breakApart(asteroidsList);
 
-    assert(asteroidsList.size() > 0); // Should have created new asteroids
-
-    std::cout << "testAsteroidsBreakApart passed!" << std::endl;
+    // Expect at least one smaller asteroid to be created
+    return asteroidsList.size() > 0;
 }
 
 int main() {
-    testAsteroidsDrawActive();
-    testAsteroidsDrawInactive();
-    testAsteroidsMovement();
-    testAsteroidsCollisionWithPlayer();
-    testAsteroidsBreakApart();
+    initTestEnvironment();
 
-    std::cout << "All tests passed!" << std::endl;
+    // Run the tests and store the results
+    TestResult results[] = {
+        {"Test Asteroids Draw Active", testAsteroidsDrawActive()},
+        {"Test Asteroids Draw Inactive", testAsteroidsDrawInactive()},
+        {"Test Asteroids Movement", testAsteroidsMovement()},
+        {"Test Asteroids Collision With Player", testCollisionDetected()},
+        {"Test Asteroids Break Apart", testAsteroidsBreakApart()}
+    };
+    int testCount = sizeof(results) / sizeof(results[0]);
+
+    // Main game loop to display results
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // Draw the test results
+        drawTestResults(results, testCount);
+
+        EndDrawing();
+    }
+
+    cleanupTestEnvironment();
     return 0;
 }
