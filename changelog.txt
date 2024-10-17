@@ -1,0 +1,8 @@
+Added a new class for dynamic player projectiles - allocating memory for the projectiles and deleting projectiles
+
+Removed shoot aliens and charge aliens, along with enemy projectiles
+
+Implemented scout to save player state and time alive, and to also provide survivability for the player
+
+Added a highscore class to save the highscores of the user on that particular device to add competitiveness
+
