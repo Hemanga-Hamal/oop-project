@@ -1,2 +1,2 @@
 # oop-project
- OOP PROJECT RAWR :3
+This project was in c++, where we made remade asteriods
